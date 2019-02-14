@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.MoveLift;
 import frc.robot.commands.MoveWheel;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -30,8 +31,9 @@ import com.kauailabs.navx.frc.AHRS;
 public class Robot extends TimedRobot {
 ///////////////////////////////////////////////////////  AHRS gyro = new AHRS(Port.kUSB);
 
-  DigitalInput limitswitch = new DigitalInput(0);
-  //public static OI m_oi;
+  //DigitalInput limitswitch = new DigitalInput(0);
+  public static OI m_oi;
+  
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser;
@@ -50,7 +52,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    //m_oi = new OI();
+    m_oi = new OI();
    
     //testMotor = new WPI_TalonSRX(0);
 
@@ -145,8 +147,25 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    Scheduler.getInstance().run();
 
-    System.out.println(limitswitch.get());
+/*
+
+    if (pad.getRawButton(1)){
+      MoveLift down = new MoveLift(.5);
+      down.execute();
+    }
+    
+
+
+    if (pad.getRawButton(2))
+    {
+      MoveLift up = new MoveLift(-.5);
+      up.execute();
+    }
+*/ 
+
+  //  System.out.println(limitswitch.get());
 /*
     if (!limitswitch.get()){
       testMotor.set(0);

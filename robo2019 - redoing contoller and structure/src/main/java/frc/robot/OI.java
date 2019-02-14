@@ -22,13 +22,15 @@ public class OI {
   //// joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
-   Joystick stick = new Joystick(RobotMap.logitechCont);
-   Button buttonA = new JoystickButton(stick, 0);
-   Button buttonB = new JoystickButton(stick, 1);
+   public Joystick stick = new Joystick(RobotMap.logitechCont);
+   public Button buttonA = new JoystickButton(stick, 1);
+   public Button buttonX = new JoystickButton(stick, 2);
+   public Button buttonB = new JoystickButton(stick, 3);
    
    public OI(){
     buttonA.whileHeld(new MoveLift(.5));// up
-    buttonB.whileHeld(new MoveLift(-.5)); //down
+    buttonX.whileHeld(new MoveLift(-.5)); //down
+    //buttonB.whenPressed(new MoveLift(0)); // stop
 
    }
    
