@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.MoveLift;
-import frc.robot.commands.MoveWheel;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -54,10 +53,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
    
-    //testMotor = new WPI_TalonSRX(0);
-
-    //mWheel = new MoveWheel();
-    
     m_chooser = new SendableChooser<>();
     pad = new Joystick(RobotMap.logitechCont);
     
@@ -148,47 +143,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
-/*
-
-    if (pad.getRawButton(1)){
-      MoveLift down = new MoveLift(.5);
-      down.execute();
-    }
-    
-
-
-    if (pad.getRawButton(2))
-    {
-      MoveLift up = new MoveLift(-.5);
-      up.execute();
-    }
-*/ 
-
-  //  System.out.println(limitswitch.get());
-/*
-    if (!limitswitch.get()){
-      testMotor.set(0);
-    }
-    else {
-      testMotor.set(0.1);
-    }
-*/
-    //double angle = gyro.getYaw() + 180.0; //good
-//code to   double angle = gyro.getYaw()/180.0;
-
-//   System.out.println("Angle = " + (angle)); //test
-    
-    //stick movement
-		//motorSpeed = pad.getRawAxis(RobotMap.leftAxis);
-//		motorSpeed = angle;
-/*		
-		if(motorSpeed != 0) {
-			mWheel.execute(motorSpeed, motorSpeed);
-			Scheduler.getInstance().run();
-    }
-*/
-}
+  }
   /**
    * This function is called periodically during test mode.
    */

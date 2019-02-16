@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class CommandBase extends Command {
 
-	public static WheelCopy sWheel = new WheelCopy();
 	public static S_Lift slift = new S_Lift();
 
 

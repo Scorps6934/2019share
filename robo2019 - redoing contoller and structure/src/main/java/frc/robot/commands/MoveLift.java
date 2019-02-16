@@ -7,10 +7,6 @@
 
 package frc.robot.commands;
 
-import frc.robot.OI;
-import frc.robot.subsystems.S_Lift;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 
 public class MoveLift extends CommandBase {
   private double dir;
@@ -20,36 +16,28 @@ public class MoveLift extends CommandBase {
     System.out.println("constructor");
     requires(slift);
     this.dir = dir;
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     System.out.println("initialize");
-    slift.resetCounter(); // we put this early on and if
+    slift.resetCounter(); // line may break limit switch purpose if spammed
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  // EZ CLAP GG 4 STOCK CLUTCHBOX
   public void execute() {
     System.out.println("execute");
-    // going up
 
     // logic works if limitswitch is normally open
-    if (slift.isSwitchSet() && dir > 0) {
-      slift.stopMotor();// Motor 0
-      // OverrideGoesHere -switch (Justin Sucks)
+    if (slift.isSwitchSet() && dir > 0) { 
+      slift.stopMotor();
     }
-    // Going Down
     else if (slift.isSwitchSet() && dir < 0) {
       slift.moveMotor(dir);
       slift.resetCounter();
     }
-    // else if(dir == 0){
-    // slift.stopMotor();
-    // }
     else {
       slift.moveMotor(dir);
     }
@@ -70,6 +58,8 @@ public class MoveLift extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    // im worried this will happen at other times besides unpressing button if more commands are added to subsystem
+    // may want to test?
     slift.stopMotor();
   }
 
