@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.MoveLift;
+import frc.robot.commands.MoveWheels;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -29,18 +30,13 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends TimedRobot {
 ///////////////////////////////////////////////////////  AHRS gyro = new AHRS(Port.kUSB);
-
-  //DigitalInput limitswitch = new DigitalInput(0);
-  public static OI m_oi;
+  public static OI oi;
   
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser;
 
-  double motorSpeed;
-
-  private Joystick pad;
-
+// MoveWheels wheels;
   //WPI_TalonSRX testMotor;
 
   //public MoveWheel mWheel;
@@ -51,10 +47,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    oi = new OI();
    
     m_chooser = new SendableChooser<>();
-    pad = new Joystick(RobotMap.logitechCont);
+
+//wheels = new MoveWheels();
     
 
     // chooser.addObject("My Auto", new MyAutoCommand());

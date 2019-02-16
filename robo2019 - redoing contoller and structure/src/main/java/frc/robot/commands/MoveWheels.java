@@ -7,40 +7,26 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class MoveLift extends CommandBase {
-  private double dir;
-
-  public MoveLift(double dir) {
-    super();
-    //System.out.println("constructor");
-    requires(slift);
-    this.dir = dir;
+public class MoveWheels extends CommandBase {
+  public MoveWheels() {
+    requires(sdrive);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //System.out.println("initialize");
-    slift.resetCounter(); // line may break limit switch purpose if button spammed
+    System.out.println("starts");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("execute");
-
-    // logic works if limitswitch is normally open
-    if (slift.isSwitchSet() && dir > 0) { 
-      slift.stopMotor();
-    }
-    else if (slift.isSwitchSet() && dir < 0) {
-      slift.moveMotor(dir);
-      slift.resetCounter();
-    }
-    else {
-      slift.moveMotor(dir);
-    }
+    System.out.println(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY));
+    sdrive.adjustSpeed(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY), Robot.oi.stick.getRawAxis(RobotMap.rightAxisY));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -58,13 +44,5 @@ public class MoveLift extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    // im worried this will happen at other times besides unpressing button if more commands are added to subsystem
-    // may want to test?
-    slift.stopMotor();
   }
-
 }
-
-// justin sucks v2
-//electric boogaloo
-

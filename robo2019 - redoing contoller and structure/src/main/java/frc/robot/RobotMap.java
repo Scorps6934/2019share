@@ -20,9 +20,24 @@ public class RobotMap {
   public static final int liftTalonPort1 = 0;
   public static final int liftTalonPort2 = 1;
 
+  //controllers
   public static final int logitechCont = 0;
 
-  public static final int leftAxis = 5;
+  //left axis
+  public static final int leftAxisX = 0;
+  public static final int leftAxisY = 1;
+  public static final int rightAxisX = 2;
+  public static final int rightAxisY = 3;
+  
+
+  
+
+  // drive talon ports
+  public static final int lfDrive = 0;
+  public static final int lbDrive = 2;
+  public static final int rfDrive = 1;
+  public static final int rbDrive = 3;
+  
 
   
   // If you are using multiple modules, make sure to define both the port

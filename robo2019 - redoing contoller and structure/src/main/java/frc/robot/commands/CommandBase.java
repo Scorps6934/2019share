@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.S_DriveWheels;
+
+
 
 /**
  * <h1>CommandBase</h1>
@@ -22,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CommandBase extends Command {
 
 	public static S_Lift slift = new S_Lift();
+	public static S_DriveWheels sdrive = new S_DriveWheels();
 
 
 	/**
