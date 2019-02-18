@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
 
 public class MoveLift extends CommandBase {
   private double dir;
@@ -14,7 +15,7 @@ public class MoveLift extends CommandBase {
   public MoveLift(double dir) {
     super();
     //System.out.println("constructor");
-    requires(slift);
+    requires(Robot.slift);
     this.dir = dir;
   }
 
@@ -22,7 +23,7 @@ public class MoveLift extends CommandBase {
   @Override
   protected void initialize() {
     //System.out.println("initialize");
-    slift.resetCounter(); // line may break limit switch purpose if button spammed
+    Robot.slift.resetCounter(); // line may break limit switch purpose if button spammed
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,15 +32,15 @@ public class MoveLift extends CommandBase {
     //System.out.println("execute");
 
     // logic works if limitswitch is normally open
-    if (slift.isSwitchSet() && dir > 0) { 
-      slift.stopMotor();
+    if (Robot.slift.isSwitchSet() && dir > 0) { 
+      Robot.slift.stopMotor();
     }
-    else if (slift.isSwitchSet() && dir < 0) {
-      slift.moveMotor(dir);
-      slift.resetCounter();
+    else if (Robot.slift.isSwitchSet() && dir < 0) {
+      Robot.slift.moveMotor(dir);
+      Robot.slift.resetCounter();
     }
     else {
-      slift.moveMotor(dir);
+      Robot.slift.moveMotor(dir);
     }
   }
 
@@ -60,7 +61,7 @@ public class MoveLift extends CommandBase {
   protected void interrupted() {
     // im worried this will happen at other times besides unpressing button if more commands are added to subsystem
     // may want to test?
-    slift.stopMotor();
+    Robot.slift.stopMotor();
   }
 
 }

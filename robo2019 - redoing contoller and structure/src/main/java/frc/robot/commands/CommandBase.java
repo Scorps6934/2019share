@@ -24,8 +24,8 @@ import frc.robot.subsystems.S_DriveWheels;
  */
 public class CommandBase extends Command {
 
-	public static S_Lift slift = new S_Lift();
-	public static S_DriveWheels sdrive = new S_DriveWheels();
+	//public static S_Lift slift = new S_Lift();
+	//public static S_DriveWheels sdrive = new S_DriveWheels();
 
 
 	/**

@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,6 +19,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.MoveLift;
 import frc.robot.commands.MoveWheels;
+import frc.robot.subsystems.S_DriveWheels;
+import frc.robot.subsystems.S_Lift;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -32,6 +37,11 @@ public class Robot extends TimedRobot {
 ///////////////////////////////////////////////////////  AHRS gyro = new AHRS(Port.kUSB);
   public static OI oi;
   
+  public static S_Lift slift = new S_Lift();
+	public static S_DriveWheels sdrive = new S_DriveWheels();
+
+  private static AnalogInput distanceSensor;
+
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser;
@@ -40,6 +50,8 @@ public class Robot extends TimedRobot {
   //WPI_TalonSRX testMotor;
 
   //public MoveWheel mWheel;
+//    UsbCamera leftCamera;
+//    UsbCamera rightCamera;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -48,10 +60,19 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     oi = new OI();
-   
     m_chooser = new SendableChooser<>();
 
-//wheels = new MoveWheels();
+    distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
+
+    sdrive.zeroEncoders();
+
+    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
+  //  leftCamera = new UsbCamera("Left Camera", 1);
+  //  rightCamera = new UsbCamera("Right Camera", 2);
+
+
+  //wheels = new MoveWheels();
     
 
     // chooser.addObject("My Auto", new MyAutoCommand());
@@ -122,6 +143,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    sdrive.zeroEncoders();
 //Code used to reset gyro everytime code is deployed
    // gyro.reset();
   //testMotor.set(0.1);
@@ -134,12 +156,15 @@ public class Robot extends TimedRobot {
     }
   }
 
+
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    System.out.println("Value: " + (distanceSensor.getVoltage()*1024.0)/25.4); // volatage to inches
   }
   /**
    * This function is called periodically during test mode.

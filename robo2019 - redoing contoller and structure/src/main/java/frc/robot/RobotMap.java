@@ -40,6 +40,15 @@ public class RobotMap {
   
 
   
+
+
+
+ //cool sensor stuff :>
+ public static final int distanceSensorPort = 0;
+ public static final int kTimeoutMs = 30;
+
+
+
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;

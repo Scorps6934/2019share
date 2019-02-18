@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.EncoderTest;
 import frc.robot.commands.MoveLift;
 
 /**
@@ -26,10 +27,12 @@ public class OI {
    public Button buttonA = new JoystickButton(stick, 1);
    public Button buttonX = new JoystickButton(stick, 2);
    public Button buttonB = new JoystickButton(stick, 3);
+   public Button buttonY = new JoystickButton(stick, 4);
    
    public OI(){
     buttonA.whileHeld(new MoveLift(.5));// up
     buttonX.whileHeld(new MoveLift(-.5)); //down
+    buttonY.whenPressed(new EncoderTest());
     //buttonB.whenPressed(new MoveLift(0)); // stop
 
    }

@@ -7,7 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -19,10 +24,10 @@ import frc.robot.commands.MoveWheels;
 public class S_DriveWheels extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  WPI_TalonSRX lfMoto = new WPI_TalonSRX(RobotMap.lfDrive); // left front
-  WPI_TalonSRX lbMoto = new WPI_TalonSRX(RobotMap.lbDrive); // left back
-  WPI_TalonSRX rfMoto = new WPI_TalonSRX(RobotMap.rfDrive); // right front
-  WPI_TalonSRX rbMoto = new WPI_TalonSRX(RobotMap.rbDrive); // right back
+  TalonSRX lfMoto = new TalonSRX(RobotMap.lfDrive); // left front
+  TalonSRX lbMoto = new TalonSRX(RobotMap.lbDrive); // left back
+  TalonSRX rfMoto = new TalonSRX(RobotMap.rfDrive); // right front
+  TalonSRX rbMoto = new TalonSRX(RobotMap.rbDrive); // right back
 
   @Override
   public void initDefaultCommand() {
@@ -32,10 +37,29 @@ public class S_DriveWheels extends Subsystem {
   }
 
   public void adjustSpeed(double leftInput, double rightInput){
-    lfMoto.set(leftInput);
-    lbMoto.set(leftInput);
-    rfMoto.set(rightInput);
-    rbMoto.set(rightInput);
+    lfMoto.set(ControlMode.PercentOutput, leftInput);
+    //lbMoto.set(ControlMode.PercentOutput, leftInput);
+    rfMoto.set(ControlMode.PercentOutput, rightInput);
+    //rbMoto.set(ControlMode.PercentOutput, rightInput);
+
+    lfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //lbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    rfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //rbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+//    System.out.println(lfMoto.getSelectedSensorPosition());
+  
   }
+
+  public void zeroEncoders()
+  {
+    lfMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+		rfMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+  }
+
+  public int getEncoderUnits(){
+    return lfMoto.getSelectedSensorPosition();
+  }
+
 
 }
