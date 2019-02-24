@@ -23,6 +23,7 @@ public class OI {
   //// joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
+  
    public Joystick stick = new Joystick(RobotMap.logitechCont);
    public Button buttonA = new JoystickButton(stick, 1);
    public Button buttonX = new JoystickButton(stick, 2);

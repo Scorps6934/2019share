@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -24,6 +26,10 @@ import frc.robot.subsystems.S_Lift;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.videoio.VideoCapture;
 
 
 /**
@@ -66,8 +72,30 @@ public class Robot extends TimedRobot {
 
     sdrive.zeroEncoders();
 
-    CameraServer.getInstance().startAutomaticCapture();
-    CameraServer.getInstance().startAutomaticCapture();
+    new Thread(() -> {
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(360, 360);
+      
+      CvSink cvSink = CameraServer.getInstance().getVideo();
+      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 360, 360);
+      
+      Mat source = new Mat();
+      Mat output = new Mat();
+      
+      while(!Thread.interrupted()) {
+          cvSink.grabFrame(source, 30);
+
+          Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+          Imgproc.threshold(output, output, 0, 255, Imgproc.THRESH_OTSU);
+
+
+          outputStream.putFrame(output);
+      }
+  }).start();  
+
+
+//    CameraServer.getInstance().startAutomaticCapture();
+//    CameraServer.getInstance().startAutomaticCapture();
   //  leftCamera = new UsbCamera("Left Camera", 1);
   //  rightCamera = new UsbCamera("Right Camera", 2);
 
@@ -164,7 +192,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    System.out.println("Value: " + (distanceSensor.getVoltage()*1024.0)/25.4); // volatage to inches
+    System.out.println("Value: " + (distanceSensor.getVoltage()/.004883)*5); // volatage to inches
   }
   /**
    * This function is called periodically during test mode.
