@@ -27,7 +27,12 @@ import frc.robot.subsystems.S_Lift;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
 
@@ -78,7 +83,7 @@ public class Robot extends TimedRobot {
       
       CvSink cvSink = CameraServer.getInstance().getVideo();
       CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 360, 360);
-      
+      CvSource colorStream = CameraServer.getInstance().putVideo("Colorful!", 360, 360);
       Mat source = new Mat();
       Mat output = new Mat();
       
@@ -87,8 +92,22 @@ public class Robot extends TimedRobot {
 
           Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
           Imgproc.threshold(output, output, 0, 255, Imgproc.THRESH_OTSU);
-
-
+          //Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
+          List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+          Mat hierarchy = new Mat();
+          Imgproc.findContours(output, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+          Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
+          for (int i = 0; i < contours.size(); i++) {
+            //...contour code here...
+            double contourArea = Imgproc.contourArea(contours.get(i));
+            if(contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)
+            {
+                continue;
+            }
+            Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
+            Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
+          }
+          colorStream.putFrame(source);
           outputStream.putFrame(output);
       }
   }).start();  
@@ -192,7 +211,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    System.out.println("Value: " + (distanceSensor.getVoltage()/.004883)*5); // volatage to inches
+    //System.out.println("Value: " + ((distanceSensor.getVoltage()*1024.0)/25.4)); // volatage to inches
   }
   /**
    * This function is called periodically during test mode.

@@ -47,6 +47,10 @@ public class RobotMap {
  public static final int distanceSensorPort = 0;
  public static final int kTimeoutMs = 30;
 
+ //img processing 
+ //test later empirically (may not use area in the end)
+ public static final int contourMinArea = 10;
+ public static final int contourMaxArea = 1000;
 
 
   // If you are using multiple modules, make sure to define both the port
