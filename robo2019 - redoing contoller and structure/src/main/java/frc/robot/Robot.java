@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.MoveLift;
 import frc.robot.commands.MoveWheels;
 import frc.robot.subsystems.S_DriveWheels;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
@@ -97,13 +99,24 @@ public class Robot extends TimedRobot {
           Mat hierarchy = new Mat();
           Imgproc.findContours(output, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
           Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
+          
           for (int i = 0; i < contours.size(); i++) {
             //...contour code here...
             double contourArea = Imgproc.contourArea(contours.get(i));
-            if(contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)
-            {
-                continue;
+            Rect boundRect = Imgproc.boundingRect(contours.get(i));
+            double ratio = contourArea/(boundRect.width*boundRect.height); // solidity ratio
+          //  double ratio = (double)boundRect.width/boundRect.height; //if not using aspect ratio can move contourArea definition to ration
+          //  System.out.println();
+            if ((ratio < RobotMap.contourMinRatio || ratio > RobotMap.contourMaxRatio) &&
+                  (contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)){
+              continue;
             }
+           // SmartDashboard.putNumber("dab", ratio);
+           // System.out.println(i+" "+ ratio);
+            //Imgproc.drawMarker(output, boundRect.br(), new Scalar(0,0,255));
+            //Imgproc.drawMarker(source, boundRect.br(), new Scalar(0,0,255));
+            Imgproc.rectangle(output, boundRect.br(),boundRect.tl() , new Scalar(0,0,255), 10);
+            Imgproc.rectangle(source, boundRect.br(),boundRect.tl() , new Scalar(0,0,255), 10); 
             Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
             Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
           }

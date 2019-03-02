@@ -49,8 +49,11 @@ public class RobotMap {
 
  //img processing 
  //test later empirically (may not use area in the end)
- public static final int contourMinArea = 10;
- public static final int contourMaxArea = 1000;
+ public static final int contourMinArea = 1000;
+ public static final int contourMaxArea = 100000;
+ public static final double contourMinRatio = 0.7;
+ public static final double contourMaxRatio = 1.5;
+
 
 
   // If you are using multiple modules, make sure to define both the port
