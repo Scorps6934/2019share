@@ -38,7 +38,7 @@ public class MoveWheels extends CommandBase {
   protected void execute() {
     // System.out.println(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY));
     if (dist != null && speed != null){
-      while(Math.abs(Robot.sdrive.getEncoderUnits()) < dist){
+      while(Math.abs(Robot.sdrive.getDriveEncoderUnits()) < dist){
         Robot.sdrive.adjustSpeed(speed, 0);
       }
       Robot.sdrive.adjustSpeed(0, 0);

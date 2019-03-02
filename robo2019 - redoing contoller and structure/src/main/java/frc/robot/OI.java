@@ -4,14 +4,14 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+//////////<----MISSING THE ROBOTICS YEARBOOK PHOTO? I DON'T THINK SO---->///////////
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.EncoderTest;
-import frc.robot.commands.MoveLift;
+import frc.robot.commands.MoveRamp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,8 +31,8 @@ public class OI {
    public Button buttonY = new JoystickButton(stick, 4);
    
    public OI(){
-    buttonA.whileHeld(new MoveLift(.5));// up
-    buttonX.whileHeld(new MoveLift(-.5)); //down
+    buttonA.whileHeld(new MoveRamp(.5));// up
+    buttonX.whileHeld(new MoveRamp(-.5)); //down
     buttonY.whenPressed(new EncoderTest());
     //buttonB.whenPressed(new MoveLift(0)); // stop
 

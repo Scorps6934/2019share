@@ -16,9 +16,17 @@ package frc.robot;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
-  public static final int liftLimitSwitch = 0; // dio port
-  public static final int liftTalonPort1 = 0;
-  public static final int liftTalonPort2 = 1;
+  
+  // ramp ports
+  public static final int rampLimitSwitch = 0; // dio port
+  public static final int rampTalonPort1 = 4;
+  public static final int rampTalonPort2 = 5;
+  
+  //elevator port
+  public static final int elevatorTalonPort = 6;
+
+  //cargo port
+  public static final int cargoTalonPort = 7;
 
   //controllers
   public static final int logitechCont = 0;

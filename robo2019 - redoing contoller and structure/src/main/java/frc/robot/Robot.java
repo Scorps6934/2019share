@@ -20,23 +20,23 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.MoveLift;
+import frc.robot.commands.MoveRamp;
 import frc.robot.commands.MoveWheels;
+import frc.robot.subsystems.S_Cargo;
 import frc.robot.subsystems.S_DriveWheels;
-import frc.robot.subsystems.S_Lift;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
+import frc.robot.subsystems.S_Elevator;
+import frc.robot.subsystems.S_Hatch;
+import frc.robot.subsystems.S_Ramp;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.videoio.VideoCapture;
 
 
 /**
@@ -50,8 +50,13 @@ public class Robot extends TimedRobot {
 ///////////////////////////////////////////////////////  AHRS gyro = new AHRS(Port.kUSB);
   public static OI oi;
   
-  public static S_Lift slift = new S_Lift();
-	public static S_DriveWheels sdrive = new S_DriveWheels();
+  //subsystems
+  public static S_Cargo scargo = new S_Cargo();
+  public static S_DriveWheels sdrive = new S_DriveWheels();
+  public static S_Elevator selevator = new S_Elevator();
+  public static S_Hatch shatch = new S_Hatch();
+  public static S_Ramp sramp = new S_Ramp();
+
 
   private static AnalogInput distanceSensor;
 
@@ -76,9 +81,21 @@ public class Robot extends TimedRobot {
     m_chooser = new SendableChooser<>();
 
     distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
+    
+  //encoder set-up
+    scargo.configCargoEncoders();
+    sdrive.configDriveEncoders();
+    selevator.configElevatorEncoders();
+    // no hatch encoder
+    sramp.configRampEncoders();
+    scargo.zeroCargoEncoders();
+    sdrive.zeroDriveEncoders();
+    selevator.zeroElevatorEncoders();
+    //no hatch encoders
+    sramp.zeroRampEncoders();
 
-    sdrive.zeroEncoders();
 
+    //openCv and vision stuff
     new Thread(() -> {
       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
       camera.setResolution(360, 360);
@@ -99,18 +116,22 @@ public class Robot extends TimedRobot {
           Mat hierarchy = new Mat();
           Imgproc.findContours(output, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
           Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
-          
+          Mat rvec = new Mat();
+          Mat tvec = new Mat();
           for (int i = 0; i < contours.size(); i++) {
             //...contour code here...
             double contourArea = Imgproc.contourArea(contours.get(i));
             Rect boundRect = Imgproc.boundingRect(contours.get(i));
             double ratio = contourArea/(boundRect.width*boundRect.height); // solidity ratio
+
           //  double ratio = (double)boundRect.width/boundRect.height; //if not using aspect ratio can move contourArea definition to ration
           //  System.out.println();
             if ((ratio < RobotMap.contourMinRatio || ratio > RobotMap.contourMaxRatio) &&
                   (contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)){
               continue;
             }
+
+            
            // SmartDashboard.putNumber("dab", ratio);
            // System.out.println(i+" "+ ratio);
             //Imgproc.drawMarker(output, boundRect.br(), new Scalar(0,0,255));
@@ -120,6 +141,7 @@ public class Robot extends TimedRobot {
             Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
             Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
           }
+          Calib3d.solvePnP(objectPoints, imagePoints, output, null, rvec, tvec); // add first 2 parameters
           colorStream.putFrame(source);
           outputStream.putFrame(output);
       }
@@ -203,7 +225,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    sdrive.zeroEncoders();
+    sdrive.zeroDriveEncoders();
 //Code used to reset gyro everytime code is deployed
    // gyro.reset();
   //testMotor.set(0.1);
