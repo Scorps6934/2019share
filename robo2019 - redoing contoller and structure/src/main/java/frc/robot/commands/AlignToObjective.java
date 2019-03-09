@@ -7,42 +7,22 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveRamp extends CommandBase {
-  private double dir;
-
-  public MoveRamp(double dir) {
-    super();
-    //System.out.println("constructor");
-    requires(Robot.sramp);
-    this.dir = dir;
+public class AlignToObjective extends Command {
+  public AlignToObjective() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
-    //System.out.println("initialize");
-    Robot.sramp.resetCounter(); // line may break limit switch purpose if button spammed
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("execute");
-
-    // logic works if limitswitch is normally open
-    if (Robot.sramp.isSwitchSet() && dir > 0) { 
-      Robot.sramp.stopMotor();
-    }
-    else if (Robot.sramp.isSwitchSet() && dir < 0) {
-      Robot.sramp.moveLift(dir);
-      Robot.sramp.resetCounter();
-    }
-    else {
-      Robot.sramp.moveLift(dir);
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,13 +40,5 @@ public class MoveRamp extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    // im worried this will happen at other times besides unpressing button if more commands are added to subsystem
-    // may want to test?
-    Robot.sramp.stopMotor();
   }
-
 }
-
-// justin sucks v2
-//electric boogaloo
-

@@ -11,18 +11,22 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Counter;
 
 /**
- * Add your docs here.
+ * Ramp subsystem includes lift motors and pneumatics for flaps
  */
 public class S_Ramp extends Subsystem {
+//lift  
   DigitalInput limitswitch = new DigitalInput(RobotMap.rampLimitSwitch);
   Counter counter = new Counter(limitswitch);
   TalonSRX leftMotor = new TalonSRX(RobotMap.rampTalonPort1);
   TalonSRX rightMotor = new TalonSRX(RobotMap.rampTalonPort2);
+//flaps
+  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.rampSolenoid, RobotMap.solenoidForward, RobotMap.solenoidReverse);
 
   @Override
    
@@ -43,11 +47,23 @@ public class S_Ramp extends Subsystem {
   }
   
 
-  public void moveMotor(double speed){
-     // limit switch on always voltage aka top on limit switch
-     leftMotor.set(ControlMode.PercentOutput, speed);
-     rightMotor.set(ControlMode.PercentOutput, speed);
-    
+	public void openFlaps() {
+		solenoid.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void closeFlaps() {
+		solenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+
+  // ?????
+  public void stopFlaps() {
+		solenoid.set(DoubleSolenoid.Value.kOff);
+	}
+	
+  public void moveLift(double speed){
+    // limit switch on always voltage aka top on limit switch
+    leftMotor.set(ControlMode.PercentOutput, speed);
+    rightMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void stopMotor() {

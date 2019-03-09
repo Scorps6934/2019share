@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -25,8 +26,12 @@ public class S_Cargo extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-
-
+  public void setShooterSpeed(double speed){
+    motor.set(ControlMode.PercentOutput, speed);
+  }
+  public void stopShooter(){
+    motor.set(ControlMode.PercentOutput, 0);
+  }
   
   //encoder stuff
   public void configCargoEncoders(){

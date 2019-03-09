@@ -17,18 +17,16 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
   
-  // ramp ports
-  public static final int rampLimitSwitch = 0; // dio port
-  public static final int rampTalonPort1 = 4;
-  public static final int rampTalonPort2 = 5;
-  
-  //elevator port
-  public static final int elevatorTalonPort = 6;
+//pneumatics
+  public static final int compressorPort = 0;
+  public static final int solenoidForward = 0;
+  public static final int solenoidReverse = 1;
+  //hatch
+  public static final int hatchSolenoid = 0;
+  //ramp
+  public static final int rampSolenoid = 0;
 
-  //cargo port
-  public static final int cargoTalonPort = 7;
-
-  //controllers
+//controllers
   public static final int logitechCont = 0;
 
   //left axis
@@ -38,34 +36,56 @@ public class RobotMap {
   public static final int rightAxisY = 3;
   
 
-  
 
-  // drive talon ports
+//camera stuff
+  //cool sensor stuff :>
+  public static final int distanceSensorPort = 0;
+  public static final int kTimeoutMs = 30;
+
+  //img processing 
+  //test later empirically (may not use area in the end)
+  public static final int contourMinArea = 1000;
+  public static final int contourMaxArea = 100000;
+  public static final double contourMinRatio = 0.7;
+  public static final double contourMaxRatio = 1.5;
+
+
+
+//talon ports + limitswitches
+  // driveWheels (4 motors)
   public static final int lfDrive = 0;
   public static final int lbDrive = 2;
   public static final int rfDrive = 1;
   public static final int rbDrive = 3;
+
+  // ramp (2 motors 1 limitswitch)
+  public static final int rampLimitSwitch = 0; // dio port
+  public static final int rampTalonPort1 = 4;
+  public static final int rampTalonPort2 = 5;
   
+  // elevator (1 motor)
+  public static final int elevatorTalonPort = 6;
 
-  
+  // cargo (1 motor)
+  public static final int cargoTalonPort = 7;
 
-
-
- //cool sensor stuff :>
- public static final int distanceSensorPort = 0;
- public static final int kTimeoutMs = 30;
-
- //img processing 
- //test later empirically (may not use area in the end)
- public static final int contourMinArea = 1000;
- public static final int contourMaxArea = 100000;
- public static final double contourMinRatio = 0.7;
- public static final double contourMaxRatio = 1.5;
+  // arm (1 motor)
+  public static final int armTalonPort = 8;
 
 
+//PID
+  //Arm
+  public static final int Parm = 0;
+  public static final int Iarm = 0;
+  public static final int Darm = 0;
 
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+  //Wheels
+  public static final int Pwheel = 0;
+  public static final int Iwheel = 0;
+  public static final int Dwheel = 0;
+
+  //Elevator
+  public static final int Pelevator = 0;
+  public static final int Ielevator = 0;
+  public static final int Delevator = 0;
 }

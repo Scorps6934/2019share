@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -23,6 +24,13 @@ public class S_Elevator extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public void moveElevator(double speed){
+    motor.set(ControlMode.PercentOutput, speed);
+  }
+  public void stopElevator(){
+    //TODO:PID loop
   }
 
   //encoder stuff

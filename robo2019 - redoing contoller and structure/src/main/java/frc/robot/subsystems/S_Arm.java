@@ -7,15 +7,17 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class S_Hatch extends Subsystem {
-  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.hatchSolenoid, RobotMap.solenoidForward, RobotMap.solenoidReverse);
+public class S_Arm extends Subsystem {
+  TalonSRX motor = new TalonSRX(RobotMap.armTalonPort);
 
   @Override
   public void initDefaultCommand() {
@@ -23,18 +25,23 @@ public class S_Hatch extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public void moveArm(double speed){
+    motor.set(ControlMode.PercentOutput, speed);
+  }
+  public void stopArm(){
+    motor.set(ControlMode.PercentOutput, 0);
+  }
 
-	public void openHatch() {
-		solenoid.set(DoubleSolenoid.Value.kForward);
-	}
+//encoders
+  public void configArmEncoders(){
+    motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+  }
 
-	public void closeHatch() {
-		solenoid.set(DoubleSolenoid.Value.kReverse);
-	}
+  public void zeroArmEncoders(){
+    motor.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+  }
 
-  // ????
-	public void stopHatch() {
-		solenoid.set(DoubleSolenoid.Value.kOff);
-	}
-	
+  public int getArmEncoderUnits(){
+    return motor.getSelectedSensorPosition();
+  }
 }

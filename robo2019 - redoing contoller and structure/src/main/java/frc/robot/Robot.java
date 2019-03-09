@@ -12,6 +12,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.MoveRamp;
 import frc.robot.commands.MoveWheels;
+import frc.robot.subsystems.S_Arm;
 import frc.robot.subsystems.S_Cargo;
 import frc.robot.subsystems.S_DriveWheels;
 import frc.robot.subsystems.S_Elevator;
@@ -31,13 +33,16 @@ import frc.robot.subsystems.S_Ramp;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.sun.tools.jdeps.Main;
+import org.opencv.core.*;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
+import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,42 +52,46 @@ import org.opencv.imgproc.Imgproc;
  * project.
  */
 public class Robot extends TimedRobot {
-///////////////////////////////////////////////////////  AHRS gyro = new AHRS(Port.kUSB);
+  /////////////////////////////////////////////////////// AHRS gyro = new
+  /////////////////////////////////////////////////////// AHRS(Port.kUSB);
   public static OI oi;
+
+  Compressor compressor = new Compressor(RobotMap.compressorPort);
   
-  //subsystems
+  // subsystems
+  public static S_Arm sarm = new S_Arm();
   public static S_Cargo scargo = new S_Cargo();
   public static S_DriveWheels sdrive = new S_DriveWheels();
   public static S_Elevator selevator = new S_Elevator();
   public static S_Hatch shatch = new S_Hatch();
   public static S_Ramp sramp = new S_Ramp();
 
-
   private static AnalogInput distanceSensor;
-
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser;
 
-// MoveWheels wheels;
-  //WPI_TalonSRX testMotor;
+  // MoveWheels wheels;
+  // WPI_TalonSRX testMotor;
 
-  //public MoveWheel mWheel;
-//    UsbCamera leftCamera;
-//    UsbCamera rightCamera;
+  // public MoveWheel mWheel;
+  // UsbCamera leftCamera;
+  // UsbCamera rightCamera;
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
     oi = new OI();
     m_chooser = new SendableChooser<>();
 
+    compressor.setClosedLoopControl(true);
+
     distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
-    
-  //encoder set-up
+
+    // encoder set-up
     scargo.configCargoEncoders();
     sdrive.configDriveEncoders();
     selevator.configElevatorEncoders();
@@ -91,12 +100,12 @@ public class Robot extends TimedRobot {
     scargo.zeroCargoEncoders();
     sdrive.zeroDriveEncoders();
     selevator.zeroElevatorEncoders();
-    //no hatch encoders
+    // no hatch encoders
     sramp.zeroRampEncoders();
 
-
-    //openCv and vision stuff
+    // openCv and vision stuff
     new Thread(() -> {
+      //TODO: add blur and lower exposure
       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
       camera.setResolution(360, 360);
       
@@ -105,43 +114,67 @@ public class Robot extends TimedRobot {
       CvSource colorStream = CameraServer.getInstance().putVideo("Colorful!", 360, 360);
       Mat source = new Mat();
       Mat output = new Mat();
-      
-      while(!Thread.interrupted()) {
-          cvSink.grabFrame(source, 30);
+      Mat corners=new Mat();
 
-          Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-          Imgproc.threshold(output, output, 0, 255, Imgproc.THRESH_OTSU);
-          //Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
-          List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-          Mat hierarchy = new Mat();
-          Imgproc.findContours(output, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-          Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
-          Mat rvec = new Mat();
-          Mat tvec = new Mat();
-          for (int i = 0; i < contours.size(); i++) {
-            //...contour code here...
-            double contourArea = Imgproc.contourArea(contours.get(i));
-            Rect boundRect = Imgproc.boundingRect(contours.get(i));
-            double ratio = contourArea/(boundRect.width*boundRect.height); // solidity ratio
+      while (!Thread.interrupted()) {
+        cvSink.grabFrame(source, 30);
 
-          //  double ratio = (double)boundRect.width/boundRect.height; //if not using aspect ratio can move contourArea definition to ration
-          //  System.out.println();
-            if ((ratio < RobotMap.contourMinRatio || ratio > RobotMap.contourMaxRatio) &&
-                  (contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)){
-              continue;
-            }
+        Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.threshold(output, output, 0, 255, Imgproc.THRESH_OTSU);
+        // Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Mat hierarchy = new Mat();
+        Imgproc.findContours(output, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+        Imgproc.cvtColor(output, output, Imgproc.COLOR_GRAY2RGB);
+        //Matrices for solvePnp()
+        //Mat rvec = new Mat();
+        //Mat tvec = new Mat();
+        int tempIndex = -1;
+        for (int i = 0; i < contours.size(); i++) {
+          // ...contour code here...
+          double contourArea = Imgproc.contourArea(contours.get(i));
+          Rect boundRect = Imgproc.boundingRect(contours.get(i));
+          double ratio = contourArea / (boundRect.width * boundRect.height); // solidity ratio
 
-            
-           // SmartDashboard.putNumber("dab", ratio);
-           // System.out.println(i+" "+ ratio);
-            //Imgproc.drawMarker(output, boundRect.br(), new Scalar(0,0,255));
-            //Imgproc.drawMarker(source, boundRect.br(), new Scalar(0,0,255));
-            Imgproc.rectangle(output, boundRect.br(),boundRect.tl() , new Scalar(0,0,255), 10);
-            Imgproc.rectangle(source, boundRect.br(),boundRect.tl() , new Scalar(0,0,255), 10); 
-            Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
-            Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
+          // double ratio = (double)boundRect.width/boundRect.height; //if not using
+          // aspect ratio can move contourArea definition to ration
+          // System.out.println();
+          if ((ratio < RobotMap.contourMinRatio || ratio > RobotMap.contourMaxRatio)
+              && (contourArea < RobotMap.contourMinArea || contourArea > RobotMap.contourMaxArea)) {
+                contours.remove(i);
+                i--;
+            continue;
           }
-          Calib3d.solvePnP(objectPoints, imagePoints, output, null, rvec, tvec); // add first 2 parameters
+
+          // SmartDashboard.putNumber("dab", ratio);
+          // System.out.println(i+" "+ ratio);
+          // Imgproc.drawMarker(output, boundRect.br(), new Scalar(0,0,255));
+          // Imgproc.drawMarker(source, boundRect.br(), new Scalar(0,0,255));
+          Imgproc.rectangle(output, boundRect.br(), boundRect.tl(), new Scalar(0, 0, 255), 10);
+          Imgproc.rectangle(source, boundRect.br(), boundRect.tl(), new Scalar(0, 0, 255), 10);
+          Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
+          Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
+
+        }
+        if(contours.get(0) != null){
+          RotatedRect rotatedRect = Imgproc.minAreaRect(new MatOfPoint2f(contours.get(0).toArray()));
+          Imgproc.boxPoints(rotatedRect, corners); 
+        }
+        
+        // Calib3d.solvePnP(objectPoints, imagePoints, output, null, rvec, tvec); // add
+        // first 2 parameters
+
+        //finds the angle to turn robot
+        double width = 360;//width of tape, I think
+        double imgWidth = 0;//still not sure what this is suppose to be
+        double FOV = 61.39;//Got this off of what Joey gave; not sure how to get
+        double currentTapeX = 0;//Have absolutly no idea how to find
+
+        double centerOfImgX = (width / 2)-0.5;
+        double focalLength = imgWidth/(2*(Math.tan(FOV/2)));
+        double degreesToChange = Math.atan((currentTapeX - centerOfImgX) / focalLength);
+
+
           colorStream.putFrame(source);
           outputStream.putFrame(output);
       }

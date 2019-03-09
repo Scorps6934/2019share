@@ -35,25 +35,33 @@ public class S_DriveWheels extends Subsystem {
 
   public void adjustSpeed(double leftInput, double rightInput){
     lfMoto.set(ControlMode.PercentOutput, leftInput);
-    //lbMoto.set(ControlMode.PercentOutput, leftInput);
+    lbMoto.set(ControlMode.PercentOutput, leftInput);
     rfMoto.set(ControlMode.PercentOutput, rightInput);
-    //rbMoto.set(ControlMode.PercentOutput, rightInput);
+    rbMoto.set(ControlMode.PercentOutput, rightInput);
 
   }
+
+  public void stopWheels(){
+    lfMoto.set(ControlMode.PercentOutput, 0);
+    lbMoto.set(ControlMode.PercentOutput, 0);
+    rfMoto.set(ControlMode.PercentOutput, 0);
+    rbMoto.set(ControlMode.PercentOutput, 0);
+  }
+
   public void configDriveEncoders(){
     lfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    //lbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    lbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     rfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    //rbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    rbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
     //    System.out.println(lfMoto.getSelectedSensorPosition());
   }
   public void zeroDriveEncoders()
   {
     lfMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
-    //lbMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+    lbMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
     rfMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
-    //rbMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+    rbMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
   }
 //TODO: get encoder values from other side maybe? and/or average the two sides?
   public int getDriveEncoderUnits(){
