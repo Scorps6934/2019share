@@ -37,19 +37,24 @@ public class RobotMap {
   
 
 
-//camera stuff
-  //cool sensor stuff :>
+
+//cool sensor stuff :>
   public static final int distanceSensorPort = 0;
   public static final int kTimeoutMs = 30;
 
-  //img processing 
-  //test later empirically (may not use area in the end)
+//img processing 
+  //TODO: test later empirically (may not use area in the end)
+  public static final int cameraExposure = 0; //??
   public static final int contourMinArea = 1000;
   public static final int contourMaxArea = 100000;
   public static final double contourMinRatio = 0.7;
   public static final double contourMaxRatio = 1.5;
 
-
+  public static final double FOV = 61.39;
+  public static final double imageWidth=360;
+  public static final double imageHeight=360;
+  public static final double cameraAngle=45;
+  public static final double cameraHeight=20;
 
 //talon ports + limitswitches
   // driveWheels (4 motors)
