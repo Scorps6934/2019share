@@ -27,10 +27,11 @@ public class S_DriveWheels extends Subsystem {
   TalonSRX rfMoto = new TalonSRX(RobotMap.rfDrive); // right front
   TalonSRX rbMoto = new TalonSRX(RobotMap.rbDrive); // right back
 
+  //gyro??
+
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new MoveWheels());
-
   }
 
   public void adjustSpeed(double leftInput, double rightInput){

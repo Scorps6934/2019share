@@ -92,30 +92,28 @@ public class Robot extends TimedRobot {
 
     distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
 
-    // encoder set-up
+  // encoder set-up
     scargo.configCargoEncoders();
     sdrive.configDriveEncoders();
     selevator.configElevatorEncoders();
     // no hatch encoder
     sramp.configRampEncoders();
+
     scargo.zeroCargoEncoders();
     sdrive.zeroDriveEncoders();
     selevator.zeroElevatorEncoders();
     // no hatch encoders
     sramp.zeroRampEncoders();
 
-    // openCv and vision stuff
+  // openCv and vision stuff
     new Thread(() -> {
       Vision vision = new Vision("camera1");
       vision.setupCameraSettings();
       vision.setupThresholding();
       vision.setupContours();
       vision.filterAndDrawContours();
-      vision.findCenter();
-      vision.colorStream.putFrame(vision.source);
-      vision.outputStream.putFrame(vision.output);
 
-  }).start();  
+    }).start();  
 
 
 //    CameraServer.getInstance().startAutomaticCapture();

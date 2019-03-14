@@ -8,11 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class AlignToObjective extends Command {
+// on button press && PID loop?? probs do run while held just in case it breaks?
+public class AlignToObjective extends CommandBase {
   public AlignToObjective() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.sdrive);
   }
 
   // Called just before this Command runs the first time

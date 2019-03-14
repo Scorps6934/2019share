@@ -27,13 +27,25 @@ public class RobotMap {
   public static final int rampSolenoid = 0;
 
 //controllers
-  public static final int logitechCont = 0;
-
-  //left axis
+  public static final int logitechDriveCont = 0;
+  public static final int logitechWeaponsCont = 1;
+//logitech button
+  public static final int buttonA = 1;
+  public static final int buttonB = 2;
+  public static final int buttonX = 3;
+  public static final int buttonY = 4;
+  public static final int leftBumper = 5;
+  public static final int rightBumper = 6;
+  public static final int backButton = 7;
+  public static final int startButton = 8;
+//joystick axes
   public static final int leftAxisX = 0;
   public static final int leftAxisY = 1;
-  public static final int rightAxisX = 2;
-  public static final int rightAxisY = 3;
+  public static final int rightAxisX = 4;
+  public static final int rightAxisY = 5;
+//triggers
+  public static final int leftTrigger = 2;
+  public static final int rightTrigger = 3;
   
 
 

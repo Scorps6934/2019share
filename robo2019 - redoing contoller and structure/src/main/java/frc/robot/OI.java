@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.CargoManager;
 import frc.robot.commands.EncoderTest;
 import frc.robot.commands.MoveRamp;
 
@@ -24,20 +25,35 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   
-   public Joystick stick = new Joystick(RobotMap.logitechCont);
-   public Button buttonA = new JoystickButton(stick, 1);
-   public Button buttonX = new JoystickButton(stick, 2);
-   public Button buttonB = new JoystickButton(stick, 3);
-   public Button buttonY = new JoystickButton(stick, 4);
-   
-   public OI(){
-    buttonA.whileHeld(new MoveRamp(.5));// up
-    buttonX.whileHeld(new MoveRamp(-.5)); //down
-    buttonY.whenPressed(new EncoderTest());
-    //buttonB.whenPressed(new MoveLift(0)); // stop
+  public Joystick driveController = new Joystick(RobotMap.logitechDriveCont);
+  public Button driveButtonA = new JoystickButton(driveController, RobotMap.buttonA);
+  public Button driveButtonB = new JoystickButton(driveController, RobotMap.buttonB);
+  public Button driveButtonX = new JoystickButton(driveController, RobotMap.buttonX);
+  public Button driveButtonY = new JoystickButton(driveController, RobotMap.buttonY);
 
-   }
-   
+  public Joystick weaponsController = new Joystick(RobotMap.logitechWeaponsCont);
+  public Button weaponsButtonA = new JoystickButton(weaponsController, RobotMap.buttonA);
+  public Button weaponsButtonB = new JoystickButton(weaponsController, RobotMap.buttonB);
+  public Button weaponsButtonX = new JoystickButton(weaponsController, RobotMap.buttonX);
+  public Button weaponsButtonY = new JoystickButton(weaponsController, RobotMap.buttonY);
+
+
+  public OI(){
+//driveCont
+  driveButtonA.whileHeld(new MoveRamp(.5));// up (change to d pad?)
+  driveButtonX.whileHeld(new MoveRamp(-.5)); //down (change to d pad?)
+  driveButtonY.whenPressed(new EncoderTest()); // encoder test is temp
+  //buttonB.whenPressed(new MoveLift(0)); // stop
+
+//weaponsCont'
+  weaponsButtonA.whileHeld(new CargoManager(1)); 
+  weaponsButtonB.whileHeld(new CargoManager(-1));
+//  weaponsButtonX
+//  weaponsButtonY
+
+
+  }
+  
 
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

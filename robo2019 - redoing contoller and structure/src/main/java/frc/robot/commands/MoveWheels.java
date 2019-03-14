@@ -16,13 +16,16 @@ public class MoveWheels extends CommandBase {
   private Double dist = null;
 
   public MoveWheels() {
+    super("moveWheels with stick");
     requires(Robot.sdrive);
   }
-  public MoveWheels(double speed){
+  public MoveWheels(double speed){ // i forget when we would use this
+    super("moveWheels with just speed???");
     requires(Robot.sdrive);
     this.speed = speed;
   }
-  public MoveWheels(double speed, double dist){
+  public MoveWheels(double speed, double dist){ // dist is in encoder units
+    super("moveWheels with encoders");
     this.speed = speed;
     this.dist = dist;
   }
@@ -39,23 +42,24 @@ public class MoveWheels extends CommandBase {
     // System.out.println(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY));
     if (dist != null && speed != null){
       while(Math.abs(Robot.sdrive.getDriveEncoderUnits()) < dist){
-        Robot.sdrive.adjustSpeed(speed, 0);
+        Robot.sdrive.adjustSpeed(speed, speed);
       }
       Robot.sdrive.adjustSpeed(0, 0);
     }
     else if (speed != null){
-      Robot.sdrive.adjustSpeed(speed, 0);
+      Robot.sdrive.adjustSpeed(speed, speed);
     }
     else{
-      Robot.sdrive.adjustSpeed(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY), Robot.oi.stick.getRawAxis(RobotMap.rightAxisY));
+      Robot.sdrive.adjustSpeed(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY), Robot.oi.driveController.getRawAxis(RobotMap.rightAxisY));
     }
+    System.out.println(Robot.sdrive.getDriveEncoderUnits());
   }
-
-
+/*TODO: figure out why is this here????
   protected void execute(double speed) {
     // System.out.println(Robot.oi.stick.getRawAxis(RobotMap.leftAxisY));
-    Robot.sdrive.adjustSpeed(speed, 0);
+    Robot.sdrive.adjustSpeed(speed, speed);
   }
+*/
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

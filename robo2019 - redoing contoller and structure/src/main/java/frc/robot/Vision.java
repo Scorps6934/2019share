@@ -81,6 +81,8 @@ public class Vision {
             Imgproc.drawContours(output, contours, i, new Scalar(255, 0, 0), 10);
             Imgproc.drawContours(source, contours, i, new Scalar(255, 0, 0), 10);
         }
+        Imgproc.drawMarker(source, findCenter(), new Scalar(0,255,0)); //to draw may need different method
+        Imgproc.drawMarker(output, findCenter(), new Scalar(0,255,0));
         colorStream.putFrame(source);
         outputStream.putFrame(output);
     }
@@ -95,7 +97,6 @@ public class Vision {
             insertionSortCorners(cornerz);
             
             center=new Point(((cornerz[0][0]+cornerz[1][0])/2),((cornerz[0][1]+cornerz[1][1])/2));
-            Imgproc.drawMarker(output, center, new Scalar(0,255,0));
         }
         else {
             System.out.println("No contours found");
