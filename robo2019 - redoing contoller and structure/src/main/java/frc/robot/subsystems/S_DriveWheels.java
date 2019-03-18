@@ -7,27 +7,39 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
+import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveWheels;
 
 /**
  * Add your docs here.
  */
-public class S_DriveWheels extends Subsystem {
+public class S_DriveWheels extends PIDSubsystem {
   TalonSRX lfMoto = new TalonSRX(RobotMap.lfDrive); // left front
   TalonSRX lbMoto = new TalonSRX(RobotMap.lbDrive); // left back
   TalonSRX rfMoto = new TalonSRX(RobotMap.rfDrive); // right front
   TalonSRX rbMoto = new TalonSRX(RobotMap.rbDrive); // right back
+  AHRS gyro = new AHRS(Port.kUSB);
 
-  //gyro??
+  public S_DriveWheels() {
+    super("S_DriveWheels", 1.0, 1.0, 1.0);
+    setAbsoluteTolerance(0.05);
+    getPIDController().setContinuous(false);
+  }
+
+
 
   @Override
   public void initDefaultCommand() {
@@ -68,6 +80,12 @@ public class S_DriveWheels extends Subsystem {
   public int getDriveEncoderUnits(){
     return lfMoto.getSelectedSensorPosition();
   }
+  protected double returnPIDInput() {
+    return gyro.pidGet()+180; //returns the sensor value that is providing the feedback for the system
+}
 
+  protected void usePIDOutput(double output) {
+      lfMoto.set(ControlMode.Position, output); // this is where the computed output value fromthe PIDController is applied to the motor
+}
 
 }

@@ -18,13 +18,18 @@ public class RobotMap {
   // following variables to use with your drivetrain subsystem.
   
 //pneumatics
+  /*notes:
+  * compressorPort/pcmPort should be the same thing (code identifies compressor the can id of the pcm due to their being only one compressor port on a pcm)
+  * for each solenoid forward and reverse are condsidered ports on the pcm (eg 2 solenoids should have a total of 4 ports used)
+  */
   public static final int compressorPort = 0;
-  public static final int solenoidForward = 0;
-  public static final int solenoidReverse = 1;
+  public static final int pcmPort = 0;
   //hatch
-  public static final int hatchSolenoid = 0;
+  public static final int hatchSolenoidForward = 0;
+  public static final int hatchSolenoidReverse = 1;
   //ramp
-  public static final int rampSolenoid = 0;
+  public static final int rampSolenoidForward = 2;
+  public static final int rampSolenoidReverse = 3;
 
 //controllers
   public static final int logitechDriveCont = 0;
@@ -70,24 +75,24 @@ public class RobotMap {
 
 //talon ports + limitswitches
   // driveWheels (4 motors)
-  public static final int lfDrive = 0;
-  public static final int lbDrive = 2;
-  public static final int rfDrive = 1;
-  public static final int rbDrive = 3;
+  public static final int lfDrive = 15;
+  public static final int lbDrive = 14;
+  public static final int rfDrive = 13;
+  public static final int rbDrive = 12;
 
   // ramp (2 motors 1 limitswitch)
   public static final int rampLimitSwitch = 0; // dio port
-  public static final int rampTalonPort1 = 4;
-  public static final int rampTalonPort2 = 5;
+  public static final int rampTalonPort1 = 2;
+  public static final int rampTalonPort2 = 3;
   
   // elevator (1 motor)
-  public static final int elevatorTalonPort = 6;
+  public static final int elevatorTalonPort = 1;
 
   // cargo (1 motor)
-  public static final int cargoTalonPort = 7;
+  public static final int cargoVictorPort = 4;
 
   // arm (1 motor)
-  public static final int armTalonPort = 8;
+  public static final int armTalonPort = 0;
 
 
 //PID
@@ -105,4 +110,15 @@ public class RobotMap {
   public static final int Pelevator = 0;
   public static final int Ielevator = 0;
   public static final int Delevator = 0;
+
+  //Robot and Field measurements
+  public static final double armLengthHatch = 1.0;      //feet
+  public static final double armLengthCargo = 1.0;      //feet
+  public static final double camToBackDistance = 1.0;   //feet
+  public static final double camToCenterDistance = 1.0; //feet
+  public static final double backwardShotAngle = 45.0;  //degrees
+  public static final double cargoShotAngle = 45.0;     //degrees
+  public static final double cargoCatchAngle = 45.0;    //degrees
+  public static final double tapeLength = 1.5;          //feet
+  
 }

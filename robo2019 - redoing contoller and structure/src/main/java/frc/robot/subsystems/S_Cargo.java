@@ -18,7 +18,8 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class S_Cargo extends Subsystem {
-  TalonSRX motor = new TalonSRX(RobotMap.cargoTalonPort);
+  //TODO: Change to Victor
+  TalonSRX motor = new TalonSRX(RobotMap.cargoVictorPort);
 
   @Override
   public void initDefaultCommand() {

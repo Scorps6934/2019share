@@ -15,7 +15,7 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class S_Hatch extends Subsystem {
-  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.hatchSolenoid, RobotMap.solenoidForward, RobotMap.solenoidReverse);
+  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.hatchSolenoidForward, RobotMap.hatchSolenoidReverse);
 
   @Override
   public void initDefaultCommand() {

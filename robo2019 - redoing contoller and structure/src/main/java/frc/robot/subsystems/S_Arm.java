@@ -10,14 +10,28 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class S_Arm extends Subsystem {
+public class S_Arm extends PIDSubsystem {
   TalonSRX motor = new TalonSRX(RobotMap.armTalonPort);
+
+  public S_Arm(){
+    super("S_Arm", RobotMap.Parm, RobotMap.Iarm, RobotMap.Darm);
+    setAbsoluteTolerance(0.05);
+    getPIDController().setContinuous(false);
+
+    /* top PID */
+    motor.config_kP(RobotMap.elevatorTalonPort, RobotMap.Pelevator, RobotMap.kTimeoutMs);
+		motor.config_kI(RobotMap.elevatorTalonPort, RobotMap.Ielevator, RobotMap.kTimeoutMs);
+    motor.config_kD(RobotMap.elevatorTalonPort, RobotMap.Delevator, RobotMap.kTimeoutMs);	
+  //motor.config_kI(RobotMap.elevatorTalonPort, RobotMap.Pelevator, 10);
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -43,5 +57,17 @@ public class S_Arm extends Subsystem {
 
   public int getArmEncoderUnits(){
     return motor.getSelectedSensorPosition();
+  }
+  
+  public int getElevatorEncoderUnits(){
+    return motor.getSelectedSensorPosition();
+  }
+
+  public double returnPIDInput() {
+    return motor.getSelectedSensorPosition(); //returns the sensor value that is providing the feedback for the system
+  }
+
+  public void usePIDOutput(double output) {
+      motor.set(ControlMode.Position, output); // this is where the computed output value fromthe PIDController is applied to the motor
   }
 }

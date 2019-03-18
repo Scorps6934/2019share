@@ -26,6 +26,7 @@ public class MoveElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.selevator.setSetpoint(1500);
     if(Robot.oi.driveController.getRawAxis(RobotMap.rightTrigger) > 0) {
       Robot.selevator.moveElevator(Robot.oi.driveController.getRawAxis(RobotMap.rightTrigger));
     }

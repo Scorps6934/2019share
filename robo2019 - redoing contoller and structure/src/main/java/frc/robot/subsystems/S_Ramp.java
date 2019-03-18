@@ -26,7 +26,7 @@ public class S_Ramp extends Subsystem {
   TalonSRX leftMotor = new TalonSRX(RobotMap.rampTalonPort1);
   TalonSRX rightMotor = new TalonSRX(RobotMap.rampTalonPort2);
 //flaps
-  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.rampSolenoid, RobotMap.solenoidForward, RobotMap.solenoidReverse);
+ DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.rampSolenoidForward, RobotMap.rampSolenoidReverse);
 
   @Override
    
@@ -66,22 +66,22 @@ public class S_Ramp extends Subsystem {
     rightMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void stopMotor() {
+  public void stopMotors() {
     leftMotor.set(ControlMode.PercentOutput, 0);
     rightMotor.set(ControlMode.PercentOutput, 0);
   }
   public void configRampEncoders(){
-    leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+  //  leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
   public void zeroRampEncoders(){
-    leftMotor.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
+  //  leftMotor.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
     rightMotor.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
   }
 
   //TODO: get encoder values from other side maybe? or average the two sides?
   public int getRampEncoderUnits(){
-    return leftMotor.getSelectedSensorPosition();
+    return rightMotor.getSelectedSensorPosition();
   }
 }

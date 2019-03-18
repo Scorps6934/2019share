@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    System.out.println("robo initiation cerimony");
     oi = new OI();
     m_chooser = new SendableChooser<>();
 
@@ -92,6 +93,8 @@ public class Robot extends TimedRobot {
 
     distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
 
+
+/* TODO: put this back
   // encoder set-up
     scargo.configCargoEncoders();
     sdrive.configDriveEncoders();
@@ -104,6 +107,9 @@ public class Robot extends TimedRobot {
     selevator.zeroElevatorEncoders();
     // no hatch encoders
     sramp.zeroRampEncoders();
+
+*/
+
 
   // openCv and vision stuff
     new Thread(() -> {
@@ -193,7 +199,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    sdrive.zeroDriveEncoders();
 //Code used to reset gyro everytime code is deployed
    // gyro.reset();
   //testMotor.set(0.1);
@@ -213,7 +218,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
+    System.out.println("hiiiiiiiii");
     //System.out.println("Value: " + ((distanceSensor.getVoltage()*1024.0)/25.4)); // volatage to inches
   }
   /**

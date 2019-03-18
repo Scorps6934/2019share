@@ -30,11 +30,11 @@ public class MoveRamp extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("execute");
+    System.out.println("execute");
 
     // logic works if limitswitch is normally open
     if (Robot.sramp.isSwitchSet() && dir > 0) { 
-      Robot.sramp.stopMotor();
+      Robot.sramp.stopMotors();
     }
     else if (Robot.sramp.isSwitchSet() && dir < 0) {
       Robot.sramp.moveLift(dir);
@@ -62,7 +62,7 @@ public class MoveRamp extends CommandBase {
   protected void interrupted() {
     // im worried this will happen at other times besides unpressing button if more commands are added to subsystem
     // may want to test?
-    Robot.sramp.stopMotor();
+    Robot.sramp.stopMotors();
   }
 
 }
