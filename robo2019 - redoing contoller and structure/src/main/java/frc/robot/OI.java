@@ -30,20 +30,27 @@ public class OI {
   public Button driveButtonB = new JoystickButton(driveController, RobotMap.buttonB);
   public Button driveButtonX = new JoystickButton(driveController, RobotMap.buttonX);
   public Button driveButtonY = new JoystickButton(driveController, RobotMap.buttonY);
+  public Button driveRightBumper = new JoystickButton(driveController, RobotMap.rightBumper);
+  public Button driveLeftBumper = new JoystickButton(driveController, RobotMap.leftBumper);
 
-  public Joystick weaponsController = new Joystick(RobotMap.logitechWeaponsCont);
+
+  public Joystick weaponsController = new Joystick(RobotMap.gamecubeWeaponsCont);
   public Button weaponsButtonA = new JoystickButton(weaponsController, RobotMap.buttonA);
   public Button weaponsButtonB = new JoystickButton(weaponsController, RobotMap.buttonB);
   public Button weaponsButtonX = new JoystickButton(weaponsController, RobotMap.buttonX);
   public Button weaponsButtonY = new JoystickButton(weaponsController, RobotMap.buttonY);
+  
 
 
   public OI(){
 //driveCont
-  driveButtonA.whileHeld(new MoveRamp(.5));// up (change to d pad?)
-  driveButtonX.whileHeld(new MoveRamp(-.5)); //down (change to d pad?)
-  driveButtonY.whenPressed(new EncoderTest()); // encoder test is temp
-  //buttonB.whenPressed(new MoveLift(0)); // stop
+  //driveButtonA.whenPressed(); // change ramping position 
+  //driveButtonB.whenPressed(); // change ramping position
+  //driveButtonX.whenPressed(); //deploy flaps (toggle)
+  //driveButtonY.whenPressed(); // toggle lift
+  //driveRightBumper.whileHeld(); // hold angle
+  //driveLeftBumper.whenPressed(); // brakes
+
 
 //weaponsCont'
   weaponsButtonA.whileHeld(new CargoManager(1)); 
@@ -51,7 +58,7 @@ public class OI {
 //  weaponsButtonX
 //  weaponsButtonY
 
-
+    
   }
   
 

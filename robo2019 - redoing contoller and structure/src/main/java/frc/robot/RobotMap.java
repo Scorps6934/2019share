@@ -33,7 +33,7 @@ public class RobotMap {
 
 //controllers
   public static final int logitechDriveCont = 0;
-  public static final int logitechWeaponsCont = 1;
+  public static final int gamecubeWeaponsCont = 1;
 //logitech button
   public static final int buttonA = 1;
   public static final int buttonB = 2;
@@ -51,7 +51,30 @@ public class RobotMap {
 //triggers
   public static final int leftTrigger = 2;
   public static final int rightTrigger = 3;
-  
+
+  //gamecube buttons
+  public static final int gcButtonA = 2;
+  public static final int gcButtonB = 3;
+  public static final int gcButtonX = 1;
+  public static final int gcButtonY = 4;
+  public static final int gcRightBumper = 8; // z button
+  public static final int gcStartButton = 10;
+  //dpad buttons
+  public static final int gcUp = 13;
+  public static final int gcDown = 15;
+  public static final int gcLeft = 16;
+  public static final int gcRight = 14;
+  //joystick axes
+  public static final int gcLeftAxisX = 0; // control stick
+  public static final int gcLeftAxisY = 1;
+  public static final int gcRightAxisX = 5; // c stick
+  public static final int gcRightAxisY = 2;
+//triggers analog (probs not used)
+  public static final int gcLeftTrigger = 3; 
+  public static final int gcRightTrigger = 4;
+//trigger digital (buttons)
+public static final int gcLeftTriggerButton = 5;
+public static final int gcRightTriggerButton = 6;
 
 
 
