@@ -35,11 +35,19 @@ public class OI {
 
 
   public Joystick weaponsController = new Joystick(RobotMap.gamecubeWeaponsCont);
-  public Button weaponsButtonA = new JoystickButton(weaponsController, RobotMap.buttonA);
-  public Button weaponsButtonB = new JoystickButton(weaponsController, RobotMap.buttonB);
-  public Button weaponsButtonX = new JoystickButton(weaponsController, RobotMap.buttonX);
-  public Button weaponsButtonY = new JoystickButton(weaponsController, RobotMap.buttonY);
-  
+  public Button weaponsButtonA = new JoystickButton(weaponsController, RobotMap.gcButtonA);
+  public Button weaponsButtonB = new JoystickButton(weaponsController, RobotMap.gcButtonB);
+  public Button weaponsButtonX = new JoystickButton(weaponsController, RobotMap.gcButtonX);
+  public Button weaponsButtonY = new JoystickButton(weaponsController, RobotMap.gcButtonY);
+  public Button weaponsRightBumper = new JoystickButton(weaponsController, RobotMap.gcRightBumper); // z button
+  public Button weaponsStartButton = new JoystickButton(weaponsController, RobotMap.gcStartButton);
+  public Button weaponsUp = new JoystickButton(weaponsController, RobotMap.gcUp);
+  public Button weaponsDown = new JoystickButton(weaponsController, RobotMap.gcDown);
+  public Button weaponsLeft = new JoystickButton(weaponsController, RobotMap.gcLeft);
+  public Button weaponsRight = new JoystickButton(weaponsController, RobotMap.gcRight);
+  public Button weaponsLeftTrigger = new JoystickButton(weaponsController, RobotMap.gcLeftTriggerButton);
+  public Button weaponsRightTrigger = new JoystickButton(weaponsController, RobotMap.gcRightTriggerButton);
+
 
 
   public OI(){
@@ -51,14 +59,23 @@ public class OI {
   //driveRightBumper.whileHeld(); // hold angle
   //driveLeftBumper.whenPressed(); // brakes
 
-
+//TODO: Add align auto method 
 //weaponsCont'
-  weaponsButtonA.whileHeld(new CargoManager(1)); 
-  weaponsButtonB.whileHeld(new CargoManager(-1));
-//  weaponsButtonX
-//  weaponsButtonY
+/*
+  weaponsButtonA.whileHeld(new CargoManager(1)); //get ? auto
+  weaponsButtonB.whileHeld(new CargoManager(-1)); //place ? auto
+  weaponsButtonX.whenPressed(); // shoot backwards into cargo bay ?
+  weaponsButtonY.whenPressed(); // flip arm (toggle?)
+  weaponsRightBumper.toggleWhenPressed(); // toggle hatch ?
+ // weaponsStartButton. // nothing?
+  weaponsUp.whenPressed(); //change height for auto place
+  weaponsDown.whenPressed(); //change height for auto place
+  weaponsLeft.whenPressed(); //change mode for placement
+  weaponsRight.whenPressed(); // change mode for placement
+  weaponsLeftTrigger.whileHeld(); //manual intake 
+  weaponsRightTrigger.whileHeld(); // manual extake
 
-    
+ */   
   }
   
 
