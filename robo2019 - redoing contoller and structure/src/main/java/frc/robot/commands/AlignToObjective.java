@@ -7,40 +7,79 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.opencv.core.Point;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
+import frc.robot.Vision;
 
-// on button press && PID loop?? probs do run while held just in case it breaks?
-public class AlignToObjective extends CommandBase {
-  public AlignToObjective() {
-    requires(Robot.sdrive);
+public class AlignToObjective extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  private double angleToTurn;
+  private Point center;
+  private double hypotenuseC;
+  private double depthDistance;
+  private double horizontalDistance;
+
+  enum GamePiece{
+    CARGO,
+    HATCH
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
+  enum ElevatorHeight{
+    LOW,
+    MID,
+    HIGH
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    
+  public AlignToObjective(GamePiece gamepeice, ElevatorHeight elevatorheight){
+    // Add Commands here:
+    // e.g. addSequential(new Command1());
+    // addSequential(new Command2());
+    // these will run in order.
+
+    center= Robot.leftVisionProcessor.findCenter();
+    if (center != null){
+      angleToTurn=Robot.leftVisionProcessor.calculateAngleToTurn(center);
+    }
+    else{
+      center = Robot.rightVisionProcessor.findCenter();
+      if(center != null){
+        angleToTurn = Robot.rightVisionProcessor.calculateAngleToTurn(center);
+      }
+    }
+
+    if(center != null){
+      hypotenuseC = Vision.calculateHypotenuseC(center);
+      depthDistance = Vision.calculateDepthDistance(angleToTurn, hypotenuseC);
+      horizontalDistance = Vision.calculateHorizontalDistance(angleToTurn, hypotenuseC);
+
+      addSequential(new DriveAngleAdjustment(angleToTurn));
+      addSequential(new DriveToDistance(horizontalDistance));
+      addSequential(new DriveToDistance(depthDistance)); // TODO: Add translation math to account for arm and center
+    }
+
+  
+  
+  
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    //addSequential(new DriveAngleAdjustment());
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+
+
+    // To run multiple commands at the same time,
+    // use addParallel()
+    // e.g. addParallel(new Command1());
+    // addSequential(new Command2());
+    // Command1 and Command2 will run in parallel.
+
+    // A command group will require all of the subsystems that each member
+    // would require.
+    // e.g. if Command1 requires chassis, and Command2 requires arm,
+    // a CommandGroup containing them would require both the chassis and the
+    // arm.
 }

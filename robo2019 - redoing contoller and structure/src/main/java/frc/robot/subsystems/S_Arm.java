@@ -216,10 +216,6 @@ public class S_Arm extends Subsystem {
   public int getArmEncoderUnits(){
     return motor.getSelectedSensorPosition();
   }
-  
-  public int getarmEncoderUnits(){
-    return motor.getSelectedSensorPosition();
-  }
 
   public double returnPIDInput() {
     return motor.getSelectedSensorPosition(); //returns the sensor value that is providing the feedback for the system

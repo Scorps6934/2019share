@@ -10,12 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DriveAngleAdjustment extends CommandBase {
-  private double angle;
-  public DriveAngleAdjustment(double angle) {
-    super("DriveAngleAdjustment");
+public class DriveBrakes extends Command {
+  public DriveBrakes() {
     requires(Robot.sdrive);
-    this.angle = angle;
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +23,7 @@ public class DriveAngleAdjustment extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.sdrive.setDriveAngle(this.angle);
+    Robot.sdrive.stopWheels();
   }
 
   // Make this return true when this Command no longer needs to run execute()

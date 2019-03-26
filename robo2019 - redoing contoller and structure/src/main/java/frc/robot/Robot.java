@@ -72,6 +72,9 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser;
 
+  public static Vision leftVisionProcessor = new Vision("camera1");
+  public static Vision rightVisionProcessor = new Vision("camera2");
+
   // MoveWheels wheels;
   // WPI_TalonSRX testMotor;
 
@@ -114,13 +117,18 @@ public class Robot extends TimedRobot {
 
   // openCv and vision stuff
     new Thread(() -> {
-      Vision vision = new Vision("camera1");
-      vision.setupCameraSettings();
-      vision.setupThresholding();
-      vision.setupContours();
-      vision.filterAndDrawContours();
+      leftVisionProcessor.setupCameraSettings();
+      leftVisionProcessor.setupThresholding();
+      leftVisionProcessor.setupContours();
+      leftVisionProcessor.filterAndDrawContours(); //TODO: might need while loop?
+    }).start();
 
-    }).start();  
+    new Thread(() -> {
+      rightVisionProcessor.setupCameraSettings();
+      rightVisionProcessor.setupThresholding();
+      rightVisionProcessor.setupContours();
+      rightVisionProcessor.filterAndDrawContours(); //TODO: might need while loop?
+    }).start();
 
 
 //    CameraServer.getInstance().startAutomaticCapture();

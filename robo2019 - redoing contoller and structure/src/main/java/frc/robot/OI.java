@@ -10,7 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AlignToObjective;
 import frc.robot.commands.CargoManager;
+import frc.robot.commands.DriveBrakes;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.EncoderTest;
 import frc.robot.commands.MoveRamp;
@@ -58,13 +60,13 @@ public class OI {
   //driveButtonX.whenPressed(); //deploy flaps (toggle)
   //driveButtonY.whenPressed(); // toggle lift
   driveRightBumper.whileHeld(new DriveStraight()); // hold angle
-  //driveLeftBumper.whenPressed(); // brakes
+  driveLeftBumper.whenPressed(new DriveBrakes()); // brakes
 
 //TODO: Add align auto method 
 //weaponsCont'
-/*
-  weaponsButtonA.whileHeld(new CargoManager(1)); //get ? auto
-  weaponsButtonB.whileHeld(new CargoManager(-1)); //place ? auto
+
+ // weaponsButtonA.whileHeld(AlignToObjective()); //get ? auto
+ /* weaponsButtonB.whileHeld(new CargoManager(-1)); //place ? auto
   weaponsButtonX.whenPressed(); // shoot backwards into cargo bay ?
   weaponsButtonY.whenPressed(); // flip arm (toggle?)
   weaponsRightBumper.toggleWhenPressed(); // toggle hatch ?

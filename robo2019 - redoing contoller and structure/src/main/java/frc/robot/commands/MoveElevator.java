@@ -32,12 +32,18 @@ public class MoveElevator extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (this.elevatorHeight == null){
-      // do the thing
+    if(Robot.sarm.getArmEncoderUnits() > RobotMap.minArmForwardEncoderCount){
+      if (this.elevatorHeight == null){
+        int setpoint = Robot.selevator.getElevatorEncoderUnits() + (int)(Robot.oi.driveController.getRawAxis(RobotMap.gcLeftAxisY)*RobotMap.elevatorJoystickStep);
+        setpoint = Math.min(setpoint, RobotMap.elevatorUpperLimit);
+        setpoint = Math.max(setpoint, RobotMap.elevatorLowerLimit);
+        Robot.selevator.setElevatorHeight(setpoint);
+      }
+      else{
+        Robot.selevator.setElevatorHeight(this.elevatorHeight);
+      }
     }
-    else{
-      Robot.selevator.setElevatorHeight(this.elevatorHeight);
-    }
+
     
     
   }

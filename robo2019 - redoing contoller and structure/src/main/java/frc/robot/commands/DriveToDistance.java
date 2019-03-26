@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class DriveToDistance extends CommandBase {
-  private int distance;
-  public DriveToDistance(int distance) {
+  private double distance;
+  public DriveToDistance(double distance) {
     super("DriveToDistance");
     requires(Robot.sdrive);
     this.distance = distance;

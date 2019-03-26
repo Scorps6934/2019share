@@ -96,7 +96,7 @@ public class Vision {
             double[][] cornerz = {corners.get(0,0), corners.get(0,1), corners.get(0,2), corners.get(0,3)};
             insertionSortCorners(cornerz);
             
-            center=new Point(((cornerz[0][0]+cornerz[1][0])/2),((cornerz[0][1]+cornerz[1][1])/2));
+            center=new Point(((cornerz[0][0]+cornerz[1][0])/2),((cornerz[0][1]+cornerz[1][1])/2)); //midpoint
         }
         else {
             System.out.println("No contours found");
@@ -136,7 +136,7 @@ public class Vision {
         return degreesToChangeX;
     }
     //see Joey's drawings a=depth, b=horizontal
-    public double calculateHypotenuseC(Point center){
+    public static double calculateHypotenuseC(Point center){
         double centerOfImageY = (RobotMap.imageHeight/2.0)-0.5;
         double focalLength = (RobotMap.imageHeight/2*(Math.tan(RobotMap.FOV/2)));
         double degreesToChangeY = Math.atan((center.y - centerOfImageY) / focalLength);
@@ -145,11 +145,11 @@ public class Vision {
         double hypotenuseC= RobotMap.cameraHeight*Math.tan(cameraAngleToTape);
         return hypotenuseC;
     }
-    public double calculateDepthDistance(double degreesToChangeX, double hypotenuseC){
+    public static double calculateDepthDistance(double degreesToChangeX, double hypotenuseC){
         double depthDistance= hypotenuseC*Math.sin(degreesToChangeX);
         return depthDistance;
     }
-    public double calculateHorizontalDistance(double degreesToChangeX, double hypotenuseC){
+    public static double calculateHorizontalDistance(double degreesToChangeX, double hypotenuseC){
         double horiontalDistance=hypotenuseC*Math.cos(degreesToChangeX);
         return horiontalDistance;
     }

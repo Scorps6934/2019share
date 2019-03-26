@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class MoveArm extends CommandBase {
   private Integer armPosition;
@@ -32,7 +33,10 @@ public class MoveArm extends CommandBase {
   @Override
   protected void execute() {
     if(this.armPosition == null){
-              // pull joystick for modification to setpoint
+      int setpoint = Robot.sarm.getArmEncoderUnits() + (int)(Robot.oi.driveController.getRawAxis(RobotMap.gcRightAxisY)*RobotMap.armJoystickStep);
+      setpoint = Math.min(setpoint, RobotMap.armForwardLimit);
+      setpoint = Math.max(setpoint, RobotMap.armBackwardLimit);
+      Robot.sarm.setArmPosition(setpoint);
     }
     else {
       Robot.sarm.setArmPosition(this.armPosition);
