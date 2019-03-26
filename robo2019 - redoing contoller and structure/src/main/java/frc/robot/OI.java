@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.CargoManager;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.EncoderTest;
 import frc.robot.commands.MoveRamp;
 
@@ -56,7 +57,7 @@ public class OI {
   //driveButtonB.whenPressed(); // change ramping position
   //driveButtonX.whenPressed(); //deploy flaps (toggle)
   //driveButtonY.whenPressed(); // toggle lift
-  //driveRightBumper.whileHeld(); // hold angle
+  driveRightBumper.whileHeld(new DriveStraight()); // hold angle
   //driveLeftBumper.whenPressed(); // brakes
 
 //TODO: Add align auto method 

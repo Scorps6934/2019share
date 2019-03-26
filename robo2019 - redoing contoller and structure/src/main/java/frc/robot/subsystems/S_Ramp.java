@@ -7,8 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -28,14 +32,172 @@ public class S_Ramp extends Subsystem {
 //flaps
  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.rampSolenoidForward, RobotMap.rampSolenoidReverse);
 
+ /*
+  public S_Ramp(){
+    //    leftMotor = TalonSRXFactory.createDefaultTalon(Constants.kRampMasterId); maybe?
+
+    
+    leftMotor.configSelectedFeedbackSensor(
+      FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+
+
+
+    leftMotor.configForwardLimitSwitchSource(
+          LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+          RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.configForwardSoftLimitThreshold(
+          RobotMap.rampUpperLimit, RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.configForwardSoftLimitEnable(true, RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.configVoltageCompSaturation(11.0, RobotMap.kTimeoutMs); // 254 put at 12.0 ¯\_(ツ)_/¯
+
+
+
+    leftMotor.configReverseSoftLimitThreshold(
+          RobotMap.rampLowerLimit, RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.configReverseSoftLimitEnable(
+          true, RobotMap.kTimeoutMs);
+
+
+    //configure magic motion
+
+    leftMotor.config_kP(
+          RobotMap.rampPID, RobotMap.Pramp, RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.config_kI(
+          RobotMap.rampPID, RobotMap.Iramp , RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.config_kD(
+          RobotMap.rampPID, RobotMap.Dramp, RobotMap.kTimeoutMs);
+
+
+
+    //            leftMotor.config_kF(
+    //                    RobotMap.rampPID, Constants.kRampHighGearKf, RobotMap.kTimeoutMs);
+
+
+
+    //            leftMotor.configMaxIntegralAccumulator(
+    //                   RobotMap.rampPID, Constants.kRampHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
+
+
+
+    //            leftMotor.config_IntegralZone(
+    //                    RobotMap.rampPID, Constants.kRampHighGearIZone, RobotMap.kTimeoutMs);
+
+
+
+    leftMotor.configAllowableClosedloopError(
+          RobotMap.rampPID, RobotMap.rampAllowableError, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configMotionAcceleration(
+          RobotMap.rampAcceleration, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configMotionCruiseVelocity(
+          RobotMap.rampCruiseVelocity, RobotMap.kTimeoutMs);
+    /*
+    //configure position PID
+
+    leftMotor.config_kP(
+          kPositionControlSlot, Constants.kRampJogKp, RobotMap.kTimeoutMs);
+
+
+    leftMotor.config_kI(
+          kPositionControlSlot, Constants.kRampHighGearKi, RobotMap.kTimeoutMs);
+
+
+    leftMotor.config_kD(
+          kPositionControlSlot, Constants.kRampJogKd, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configMaxIntegralAccumulator(
+          kPositionControlSlot, Constants.kRampHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
+
+
+    leftMotor.config_IntegralZone(
+          kPositionControlSlot, Constants.kRampHighGearIZone, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configAllowableClosedloopError(
+          kPositionControlSlot, Constants.kRampHighGearDeadband, RobotMap.kTimeoutMs);
+    */
+
+    /*   TODO: add this?
+    leftMotor.configClosedloopRamp(
+          Constants.kRampRampRate, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configOpenloopRamp(
+          Constants.kRampRampRate, RobotMap.kTimeoutMs);
+
+    //end multiline comment here 
+
+    //TODO: may need to adjust values?
+    leftMotor.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configPeakCurrentLimit(35, RobotMap.kTimeoutMs);
+
+
+    leftMotor.configPeakCurrentDuration(200, RobotMap.kTimeoutMs);
+
+    leftMotor.enableCurrentLimit(true);
+
+
+    leftMotor.configSetParameter(ParamEnum.eClearPositionOnLimitF, 0, 0, 0, 0);
+    leftMotor.configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 0);
+
+
+    leftMotor.selectProfileSlot(RobotMap.rampPID, 0);
+
+    leftMotor.overrideLimitSwitchesEnable(true);
+    leftMotor.overrideSoftLimitsEnable(false);
+
+    leftMotor.enableVoltageCompensation(true);
+
+    leftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 20);
+    leftMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
+
+    
+    leftMotor.setSensorPhase(true);
+
+    leftMotor.set(ControlMode.PercentOutput, 0);
+
+    rightMotor.set(ControlMode.Follower, RobotMap.rampTalonPort1); // following leftMotor
+    
+    //TODO: do talonObject.setInverted(true) with correct motor
+  }
+*/
+
   @Override
-   
   public void initDefaultCommand() {
     
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-  
+
+
+
+  public void setLiftPosition(double setpoint){
+    leftMotor.set(ControlMode.MotionMagic, setpoint);
+  }
   
   public void resetCounter(){
     counter.reset();

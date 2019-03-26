@@ -11,11 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class MoveArm extends CommandBase {
-  
+  private Integer armPosition;
 
   public MoveArm() {
-    super("MoveArm");
+    super("MoveArm - teleop");
     requires(Robot.sarm);
+  }
+  public MoveArm(int position){
+    super("MoveArm - auto");
+    requires(Robot.sarm);
+    this.armPosition = position; 
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +31,12 @@ public class MoveArm extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    if(this.armPosition == null){
+              // pull joystick for modification to setpoint
+    }
+    else {
+      Robot.sarm.setArmPosition(this.armPosition);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
 
     distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
 
+    sdrive.gyro.reset();
 
 /* TODO: put this back
   // encoder set-up

@@ -11,11 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class MoveElevator extends Command {
+public class MoveElevator extends CommandBase {
+  private Integer elevatorHeight;
+
   public MoveElevator() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    super("MoveElevator - teleop");
     requires(Robot.selevator);
+  }
+  public MoveElevator(int height) {
+    super("MoveElevator - auto");
+    requires(Robot.selevator);
+    this.elevatorHeight = height;
   }
 
   // Called just before this Command runs the first time
@@ -26,10 +32,14 @@ public class MoveElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.selevator.setSetpoint(1500);
-    if(Robot.oi.driveController.getRawAxis(RobotMap.rightTrigger) > 0) {
-      Robot.selevator.moveElevator(Robot.oi.driveController.getRawAxis(RobotMap.rightTrigger));
+    if (this.elevatorHeight == null){
+      // do the thing
     }
+    else{
+      Robot.selevator.setElevatorHeight(this.elevatorHeight);
+    }
+    
+    
   }
   //Robot.sdrive.adjustSpeed(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY), Robot.oi.driveController.getRawAxis(RobotMap.rightAxisY));
 

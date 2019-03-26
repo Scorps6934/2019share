@@ -9,22 +9,26 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-// on button press && PID loop?? probs do run while held just in case it breaks?
-public class AlignToObjective extends CommandBase {
-  public AlignToObjective() {
+public class DriveStraight extends CommandBase {
+  private double currentSavedAngle;
+  public DriveStraight() {
+    super("DriveStraight");
     requires(Robot.sdrive);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    currentSavedAngle = Robot.sdrive.getCurrentAngle();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    Robot.sdrive.setDriveAngle(this.currentSavedAngle);
+    Robot.sdrive.adjustSpeed(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY), Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY));
   }
 
   // Make this return true when this Command no longer needs to run execute()

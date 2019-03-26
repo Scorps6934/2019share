@@ -52,7 +52,7 @@ public class MoveWheels extends CommandBase {
     else{
       Robot.sdrive.adjustSpeed(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY), Robot.oi.driveController.getRawAxis(RobotMap.rightAxisY));
     }
-    System.out.println(Robot.sdrive.getDriveEncoderUnits());
+   // System.out.println(Robot.sdrive.getDriveEncoderUnits());
   }
 /*TODO: figure out why is this here????
   protected void execute(double speed) {
