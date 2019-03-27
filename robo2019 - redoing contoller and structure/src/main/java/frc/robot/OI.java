@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.AlignToObjective;
 import frc.robot.commands.CargoManager;
+import frc.robot.commands.ChangeAutoSettings;
 import frc.robot.commands.DriveBrakes;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.EncoderTest;
+import frc.robot.commands.MoveLift;
 import frc.robot.commands.MoveRamp;
+import frc.robot.commands.ChangeAutoSettings.AutoSettings;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -58,27 +61,29 @@ public class OI {
   //driveButtonA.whenPressed(); // change ramping position 
   //driveButtonB.whenPressed(); // change ramping position
   //driveButtonX.whenPressed(); //deploy flaps (toggle)
-  //driveButtonY.whenPressed(); // toggle lift
+  driveButtonY.whenPressed(new ChangeAutoSettings(AutoSettings.TOGGLE_LIFT)); // toggle lift
+  driveButtonY.whenPressed(new MoveLift());
   driveRightBumper.whileHeld(new DriveStraight()); // hold angle
   driveLeftBumper.whenPressed(new DriveBrakes()); // brakes
 
 //TODO: Add align auto method 
 //weaponsCont'
 
- // weaponsButtonA.whileHeld(AlignToObjective()); //get ? auto
- /* weaponsButtonB.whileHeld(new CargoManager(-1)); //place ? auto
-  weaponsButtonX.whenPressed(); // shoot backwards into cargo bay ?
-  weaponsButtonY.whenPressed(); // flip arm (toggle?)
-  weaponsRightBumper.toggleWhenPressed(); // toggle hatch ?
+ // weaponsButtonA.whileHeld(); //get ? auto
+ // weaponsButtonB.whileHeld(new AlignToObjective()); //place ? auto
+ // weaponsButtonX.whenPressed(); // shoot backwards into cargo bay ?
+ // weaponsButtonY.whenPressed(); // flip arm (toggle?)
+ // weaponsRightBumper.toggleWhenPressed(); // toggle hatch ?
  // weaponsStartButton. // nothing?
-  weaponsUp.whenPressed(); //change height for auto place
-  weaponsDown.whenPressed(); //change height for auto place
-  weaponsLeft.whenPressed(); //change mode for placement
-  weaponsRight.whenPressed(); // change mode for placement
-  weaponsLeftTrigger.whileHeld(); //manual intake 
-  weaponsRightTrigger.whileHeld(); // manual extake
+  weaponsUp.whenPressed(new ChangeAutoSettings(AutoSettings.UP)); //changeheight for auto place
+  weaponsDown.whenPressed(new ChangeAutoSettings(AutoSettings.DOWN)); //change height for auto place
+  weaponsLeft.whenPressed(new ChangeAutoSettings(AutoSettings.CARGO)); //change mode for placement
+  weaponsRight.whenPressed(new ChangeAutoSettings(AutoSettings.HATCH)); // change mode for placement
+  
+  weaponsLeftTrigger.whileHeld(new CargoManager(-1)); //manual intake (should have dirs for CargoManager be enum)
+  weaponsRightTrigger.whileHeld(new CargoManager(1)); // manual extake
 
- */   
+    
   }
   
 

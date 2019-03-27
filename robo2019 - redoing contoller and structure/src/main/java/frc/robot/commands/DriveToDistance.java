@@ -29,10 +29,10 @@ public class DriveToDistance extends CommandBase {
     Robot.sdrive.setDriveDistance(this.distance);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  // Make this return true when this Command no longer needs to run execute() 
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs(this.distance-Robot.sdrive.getDriveEncoderUnits())<2;
   }
 
   // Called once after isFinished returns true

@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 
-public class MoveRamp extends CommandBase {
+public class MoveRamp extends CommandBase { // may become depricated (change to lift and flaps)
   private double dir;
 
   public MoveRamp(double dir) {

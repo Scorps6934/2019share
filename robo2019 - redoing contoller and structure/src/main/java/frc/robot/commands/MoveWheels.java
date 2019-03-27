@@ -26,6 +26,7 @@ public class MoveWheels extends CommandBase {
   }
   public MoveWheels(double speed, double dist){ // dist is in encoder units
     super("moveWheels with encoders");
+    requires(Robot.sdrive);
     this.speed = speed;
     this.dist = dist;
   }

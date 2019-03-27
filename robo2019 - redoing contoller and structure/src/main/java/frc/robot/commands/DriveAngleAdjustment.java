@@ -30,9 +30,10 @@ public class DriveAngleAdjustment extends CommandBase {
   }
 
   // Make this return true when this Command no longer needs to run execute()
+  //TODO: set isFinished to work properly with scheduler (when will it return true?) also change allowable error?
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs(this.angle-Robot.sdrive.getCurrentAngle())<0.1;
   }
 
   // Called once after isFinished returns true

@@ -185,4 +185,5 @@ public static final int gcRightTriggerButton = 6;
   public static final int minArmForwardEncoderCount = 42069; // when arm is past this point it is considered forward
   public static final int elevatorJoystickStep = 42069;
   public static final int armJoystickStep = 42069;
+  public static final int maxLiftHeight = 42069;
 }

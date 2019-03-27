@@ -32,7 +32,7 @@ public class S_Ramp extends Subsystem {
 //flaps
  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.rampSolenoidForward, RobotMap.rampSolenoidReverse);
 
- /*
+
   public S_Ramp(){
     //    leftMotor = TalonSRXFactory.createDefaultTalon(Constants.kRampMasterId); maybe?
 
@@ -147,7 +147,7 @@ public class S_Ramp extends Subsystem {
     leftMotor.configOpenloopRamp(
           Constants.kRampRampRate, RobotMap.kTimeoutMs);
 
-    //end multiline comment here 
+    */
 
     //TODO: may need to adjust values?
     leftMotor.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
@@ -184,7 +184,7 @@ public class S_Ramp extends Subsystem {
     
     //TODO: do talonObject.setInverted(true) with correct motor
   }
-*/
+
 
   @Override
   public void initDefaultCommand() {

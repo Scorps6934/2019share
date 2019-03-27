@@ -9,15 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class CargoManager extends CommandBase {
-  private Double dir;
-
-  public CargoManager(double dir) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.scargo);
-    this.dir = dir;
+public class MoveLift extends CommandBase {
+  public MoveLift() {
+    super("MoveLift");
+    requires(Robot.sramp);
   }
 
   // Called just before this Command runs the first time
@@ -28,7 +25,12 @@ public class CargoManager extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.scargo.setShooterSpeed(this.dir);
+    if (ChangeAutoSettings.liftIsUp){
+      Robot.sramp.setLiftPosition(RobotMap.maxLiftHeight);
+    }
+    else{
+      Robot.sramp.setLiftPosition(0); // might want lower limit for lift
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,6 +48,5 @@ public class CargoManager extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.scargo.stopShooter();
   }
 }

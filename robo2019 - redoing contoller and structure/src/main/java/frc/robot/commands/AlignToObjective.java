@@ -28,7 +28,7 @@ public class AlignToObjective extends CommandGroup {
     HATCH
   }
 
-  enum ElevatorHeight{
+  enum ElevatorHeight{ //for true auto?
     LOW,
     MID,
     HIGH
@@ -56,9 +56,19 @@ public class AlignToObjective extends CommandGroup {
       depthDistance = Vision.calculateDepthDistance(angleToTurn, hypotenuseC);
       horizontalDistance = Vision.calculateHorizontalDistance(angleToTurn, hypotenuseC);
 
-      addSequential(new DriveAngleAdjustment(angleToTurn));
+      addSequential(new DriveAngleAdjustment(angleToTurn)); //TODO: add isFinished to commands? or maybe an addParallel instead
       addSequential(new DriveToDistance(horizontalDistance));
+      addSequential(new DriveAngleAdjustment(90.0));
       addSequential(new DriveToDistance(depthDistance)); // TODO: Add translation math to account for arm and center
+      
+      // shooting
+      // TODO: will use switch statement to set encoder distances based on different heights/goals
+      /*
+      addSequential(new MoveArm(encodernunits1)); // be careful to make this so arm is in a position for shooting first cargo
+      addSequential(new MoveElevator(encoderunits2));
+      addSequential(new CargoManager(speed/dir));
+      */
+
     }
 
   
