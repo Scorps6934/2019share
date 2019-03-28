@@ -7,28 +7,30 @@
 
 package frc.robot.commands;
 
+
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
 /**
  * Add your docs here.
  */
-public class ToggleHatch extends InstantCommand {
-  private boolean hatchIsOpen = false; 
-  public ToggleHatch() {
-    super("ToggleHatch");
-    requires(Robot.shatch);
+public class ToggleFlaps extends InstantCommand {
+  private boolean flapsAreOpen = false;
+
+  public ToggleFlaps() {
+    super("ToggleFlaps");
+    requires(Robot.sramp);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    hatchIsOpen = !hatchIsOpen;
-    if (hatchIsOpen){
-      Robot.shatch.openHatch();
+    flapsAreOpen = !flapsAreOpen;
+    if (flapsAreOpen){
+      Robot.sramp.openFlaps();
     }
     else {
-      Robot.shatch.closeHatch();
+      Robot.sramp.closeFlaps();
     }
   }
 

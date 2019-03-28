@@ -9,30 +9,32 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveToDistance extends CommandBase {
-  private double distance;
-  public DriveToDistance(double distance) {
+  private int targetDistanceInEncoderUnits;
+  public DriveToDistance(double distanceInInches) {
     super("DriveToDistance");
     requires(Robot.sdrive);
-    this.distance = distance;
+    targetDistanceInEncoderUnits = Robot.sdrive.getDriveEncoderUnits() + (int)(distanceInInches*RobotMap.EncoderUnitsToDistanceRatio);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.sdrive.selectDriveDistancePID();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.sdrive.setDriveDistance(this.distance);
+    Robot.sdrive.setDriveDistance(targetDistanceInEncoderUnits);
   }
 
   // Make this return true when this Command no longer needs to run execute() 
   @Override
   protected boolean isFinished() {
-    return Math.abs(this.distance-Robot.sdrive.getDriveEncoderUnits())<2;
+    return Robot.sdrive.getCurrentError()<RobotMap.driveDistanceAllowableError;
   }
 
   // Called once after isFinished returns true

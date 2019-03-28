@@ -21,6 +21,7 @@ public class DriveStraight extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.sdrive.selectDriveAnglePID();
     currentSavedAngle = Robot.sdrive.getCurrentAngle();
   }
 

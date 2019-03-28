@@ -12,6 +12,8 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class MoveLift extends CommandBase {
+  private boolean liftIsUp = false;
+
   public MoveLift() {
     super("MoveLift");
     requires(Robot.sramp);
@@ -20,12 +22,19 @@ public class MoveLift extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    liftIsUp = !liftIsUp;
+    if (liftIsUp){
+      Robot.sramp.openFlaps();
+    }
+    else {
+      Robot.sramp.closeFlaps();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (ChangeAutoSettings.liftIsUp){
+    if (liftIsUp){
       Robot.sramp.setLiftPosition(RobotMap.maxLiftHeight);
     }
     else{

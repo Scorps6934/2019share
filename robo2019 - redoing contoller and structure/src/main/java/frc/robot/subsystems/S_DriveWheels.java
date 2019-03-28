@@ -82,7 +82,7 @@ public class S_DriveWheels extends Subsystem {
   // pid slots and constants config
     //angle pid
     lfMoto.configSelectedFeedbackSensor( //TODO: check that analog feedback is correct
-      FeedbackDevice.Analog, RobotMap.driveAnglePID, RobotMap.kTimeoutMs);
+      FeedbackDevice.Analog, 0, RobotMap.kTimeoutMs);
       
     lfMoto.config_kP(
           RobotMap.driveAnglePID, RobotMap.PdriveAngle, RobotMap.kTimeoutMs);
@@ -94,11 +94,11 @@ public class S_DriveWheels extends Subsystem {
           RobotMap.driveAnglePID, RobotMap.DdriveAngle, RobotMap.kTimeoutMs);
 
     lfMoto.configAllowableClosedloopError(
-          RobotMap.driveAnglePID, RobotMap.driveAllowableError, RobotMap.kTimeoutMs);
+          RobotMap.driveAnglePID, RobotMap.driveAngleAllowableError, RobotMap.kTimeoutMs);
       
     //distance pid
     lfMoto.configSelectedFeedbackSensor(
-      FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.driveDistancePID, RobotMap.kTimeoutMs);
+      FeedbackDevice.QuadEncoder, 0, RobotMap.kTimeoutMs);
       
     lfMoto.config_kP(
           RobotMap.driveDistancePID, RobotMap.PdriveDistance, RobotMap.kTimeoutMs);
@@ -110,7 +110,7 @@ public class S_DriveWheels extends Subsystem {
           RobotMap.driveDistancePID, RobotMap.DdriveDistance, RobotMap.kTimeoutMs);
 
     lfMoto.configAllowableClosedloopError(
-          RobotMap.driveDistancePID, RobotMap.driveAllowableError, RobotMap.kTimeoutMs);
+          RobotMap.driveDistancePID, RobotMap.driveDistanceAllowableError, RobotMap.kTimeoutMs);
 
     //            lfMoto.config_kF(
     //                    RobotMap.drivePID, Constants.kDriveHighGearKf, RobotMap.kTimeoutMs);
@@ -124,7 +124,7 @@ public class S_DriveWheels extends Subsystem {
 
     //            lfMoto.config_IntegralZone(
     //                    RobotMap.drivePID, Constants.kDriveHighGearIZone, RobotMap.kTimeoutMs);
-
+//TODO: may need to fix by putting with select slot in commands
     lfMoto.configMotionAcceleration(
           RobotMap.driveAcceleration, RobotMap.kTimeoutMs);
 
@@ -184,15 +184,12 @@ public class S_DriveWheels extends Subsystem {
     lfMoto.configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 0);
 
 
-    lfMoto.selectProfileSlot(RobotMap.driveAnglePID, 0); //TODO: make sure that slotIdx is the pid slot (and that we use primary control loop vs aux)
-    lfMoto.selectProfileSlot(RobotMap.driveDistancePID, 0);
-
     lfMoto.overrideLimitSwitchesEnable(true);
     lfMoto.overrideSoftLimitsEnable(false);
 
     lfMoto.enableVoltageCompensation(true);
 
-    lfMoto.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 20);
+    lfMoto.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10, 20); // may not need?
     lfMoto.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
 
 
@@ -240,11 +237,11 @@ public class S_DriveWheels extends Subsystem {
     rbMoto.set(ControlMode.PercentOutput, 0);
   }
 
-  public void configDriveEncoders(){
-    lfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    lbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    rfMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    rbMoto.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+  public void configDriveEncoders(){ // maybe use FeedbackDevice.CTRE_MagEncoder_Relative instead
+    lfMoto.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    lbMoto.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    rfMoto.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    rbMoto.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
     //    System.out.println(lfMoto.getSelectedSensorPosition());
   }
@@ -264,15 +261,15 @@ public class S_DriveWheels extends Subsystem {
   public double getCurrentAngle(){
     return gyro.getYaw() + 180.0; // TODO: may want to change to not be continuous (go over 360 or under 0)
   }
+  public int getCurrentError(){
+      return lfMoto.getClosedLoopError();
+  }
 
+  public void selectDriveDistancePID(){
+      lfMoto.selectProfileSlot(RobotMap.driveDistancePID, 0);
+  }
+  public void selectDriveAnglePID(){
+      lfMoto.selectProfileSlot(RobotMap.driveAnglePID, 0);
+  }
 
-/*
-  protected double returnPIDInput() {
-    return gyro.pidGet()+180; //returns the sensor value that is providing the feedback for the system
-}
-
-  protected void usePIDOutput(double output) {
-      lfMoto.set(ControlMode.Position, output); // this is where the computed output value fromthe PIDController is applied to the motor
-}
-*/
 }

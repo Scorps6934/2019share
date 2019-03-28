@@ -7,10 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -18,8 +16,8 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class S_Cargo extends Subsystem {
-  //TODO: Change to Victor
-  TalonSRX motor = new TalonSRX(RobotMap.cargoVictorPort);
+  DigitalInput limitswitch = new DigitalInput(RobotMap.cargoLimitSwitch);
+  Victor motor = new Victor(RobotMap.cargoVictorPort);
 
   @Override
   public void initDefaultCommand() {
@@ -28,22 +26,14 @@ public class S_Cargo extends Subsystem {
   }
 
   public void setShooterSpeed(double speed){
-    motor.set(ControlMode.PercentOutput, speed);
+    if (limitswitch.get()){ //TODO: make sure limitswitch in correct position
+     motor.set(speed);
+    }
+    else {
+      motor.set(0);
+    }
   }
   public void stopShooter(){
-    motor.set(ControlMode.PercentOutput, 0);
-  }
-  
-  //encoder stuff
-  public void configCargoEncoders(){
-    motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-  }
-
-  public void zeroCargoEncoders(){
-    motor.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
-  }
-
-  public int getCargoEncoderUnits(){
-    return motor.getSelectedSensorPosition();
+    motor.set(0);
   }
 }

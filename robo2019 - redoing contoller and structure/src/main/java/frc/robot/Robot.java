@@ -7,22 +7,17 @@
 
 package frc.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.MoveRamp;
-import frc.robot.commands.MoveWheels;
+import frc.robot.commands.AutoDoubleRocket;
+import frc.robot.commands.AutoDoubleShuttle;
+import frc.robot.commands.AutoHybrid;
 import frc.robot.subsystems.S_Arm;
 import frc.robot.subsystems.S_Cargo;
 import frc.robot.subsystems.S_DriveWheels;
@@ -30,19 +25,6 @@ import frc.robot.subsystems.S_Elevator;
 import frc.robot.subsystems.S_Hatch;
 import frc.robot.subsystems.S_Ramp;
 
-import java.util.ArrayList;
-import java.util.List;
-
-//import com.sun.tools.jdeps.Main;
-import org.opencv.core.*;
-import org.opencv.calib3d.Calib3d;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Rect;
-import org.opencv.core.RotatedRect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import frc.robot.Vision;
 
 /**
@@ -70,7 +52,7 @@ public class Robot extends TimedRobot {
   private static AnalogInput distanceSensor;
 
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser;
+  SendableChooser<Command> autoChooser;
 
   public static Vision leftVisionProcessor = new Vision("camera1");
   public static Vision rightVisionProcessor = new Vision("camera2");
@@ -88,9 +70,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    autoChooser = new SendableChooser<>();
+    //autoChooser.setDefaultOption("left auto", new autoLeft());
+    autoChooser.setDefaultOption("one shuttle, one rocket", new AutoHybrid());
+    autoChooser.addOption("two shuttle", new AutoDoubleShuttle());
+    autoChooser.addOption("two rocket", new AutoDoubleRocket());
+		//autoChooser.addOption("right auto", new autoRight());
+		//autoChooser.addDefault("safe auto",  new autoSafe());
+		SmartDashboard.putData("select auto", autoChooser);
+		
+		autoChooser.getSelected();
+
     System.out.println("robo initiation cerimony");
     oi = new OI();
-    m_chooser = new SendableChooser<>();
+
 
     compressor.setClosedLoopControl(true);
 
@@ -98,21 +92,19 @@ public class Robot extends TimedRobot {
 
     sdrive.gyro.reset();
 
-/* TODO: put this back
+// TODO: put this back
   // encoder set-up
-    scargo.configCargoEncoders();
     sdrive.configDriveEncoders();
     selevator.configElevatorEncoders();
-    // no hatch encoder
     sramp.configRampEncoders();
+    sarm.configArmEncoders();
 
-    scargo.zeroCargoEncoders();
     sdrive.zeroDriveEncoders();
     selevator.zeroElevatorEncoders();
-    // no hatch encoders
     sramp.zeroRampEncoders();
+    sarm.zeroArmEncoders();
 
-*/
+
 
 
   // openCv and vision stuff
@@ -183,7 +175,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = autoChooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -227,7 +219,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    System.out.println("hiiiiiiiii");
+    //System.out.println("hiiiiiiiii");
     //System.out.println("Value: " + ((distanceSensor.getVoltage()*1024.0)/25.4)); // volatage to inches
   }
   /**

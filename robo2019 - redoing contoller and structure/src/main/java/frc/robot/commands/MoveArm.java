@@ -21,7 +21,7 @@ public class MoveArm extends CommandBase {
   public MoveArm(int position){
     super("MoveArm - auto");
     requires(Robot.sarm);
-    this.armPosition = position; 
+    this.armPosition = position + Robot.sarm.getArmEncoderUnits(); 
   }
 
   // Called just before this Command runs the first time
@@ -46,7 +46,7 @@ public class MoveArm extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.sarm.getCurrentError()<RobotMap.armAllowableError;
   }
 
   // Called once after isFinished returns true

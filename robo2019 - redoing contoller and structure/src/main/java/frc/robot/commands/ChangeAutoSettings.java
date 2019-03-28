@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class ChangeAutoSettings extends InstantCommand { 
   public static int heightIndex = 0; // lowest height
   public static int modeIndex = 0; //cargo mode (might want dashboard changes)
-  public static boolean liftIsUp = false;
+  //TODO: have changeable depending on how we start the round
+
   private AutoSettings option;
 
   public enum AutoSettings{
     UP,
     DOWN,
     CARGO,
-    HATCH,
-    TOGGLE_LIFT
+    HATCH
   }
 
   public ChangeAutoSettings(AutoSettings option) {
@@ -48,9 +48,7 @@ public class ChangeAutoSettings extends InstantCommand {
       case HATCH:
         modeIndex = 0;
         break;
-      case TOGGLE_LIFT:
-        liftIsUp = !liftIsUp;
     }
-  }
   
+  }
 }

@@ -7,33 +7,35 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveAngleAdjustment extends CommandBase {
-  private double angle;
+  private double targetAngle;
   public DriveAngleAdjustment(double angle) {
     super("DriveAngleAdjustment");
     requires(Robot.sdrive);
-    this.angle = angle;
+    targetAngle = angle + Robot.sdrive.getCurrentAngle(); // pid may screw with this command - we will see in testing :)
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.sdrive.selectDriveAnglePID();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.sdrive.setDriveAngle(this.angle);
+    Robot.sdrive.setDriveAngle(targetAngle);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   //TODO: set isFinished to work properly with scheduler (when will it return true?) also change allowable error?
   @Override
   protected boolean isFinished() {
-    return Math.abs(this.angle-Robot.sdrive.getCurrentAngle())<0.1;
+    return Robot.sdrive.getCurrentError()<RobotMap.driveAngleAllowableError;
   }
 
   // Called once after isFinished returns true

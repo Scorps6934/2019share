@@ -69,7 +69,7 @@ public class RobotMap {
   public static final int gcLeftAxisY = 1;
   public static final int gcRightAxisX = 5; // c stick
   public static final int gcRightAxisY = 2;
-//triggers analog (probs not used)
+//triggers analog (probs not used) -- ignore
   public static final int gcLeftTrigger = 3; 
   public static final int gcRightTrigger = 4;
 //trigger digital (buttons)
@@ -103,16 +103,16 @@ public static final int gcRightTriggerButton = 6;
   public static final int rfDrive = 15;
   public static final int rbDrive = 14;
 
-  // ramp (2 motors 1 limitswitch)
-  public static final int rampLimitSwitch = 0; // dio port
+  // ramp (2 motors)
   public static final int rampTalonPort1 = 12;
   public static final int rampTalonPort2 = 13;
   
   // elevator (1 motor)
   public static final int elevatorTalonPort = 1;
 
-  // cargo (1 motor)
+  // cargo (1 motor & 1 limitswitch)
   public static final int cargoVictorPort = 4;
+  public static final int cargoLimitSwitch = 0;
 
   // arm (1 motor)
   public static final int armTalonPort = 0;
@@ -141,7 +141,8 @@ public static final int gcRightTriggerButton = 6;
   public static final int PdriveDistance = 0;
   public static final int IdriveDistance = 0;
   public static final int DdriveDistance = 0;
-  public static final int driveAllowableError = 1; //TODO: set these correctly
+  public static final int driveDistanceAllowableError = 42069; //TODO: set these correctly
+  public static final int driveAngleAllowableError = 2;
   
   public static final int driveCruiseVelocity = 1;
   public static final int driveAcceleration = 1;
@@ -186,4 +187,6 @@ public static final int gcRightTriggerButton = 6;
   public static final int elevatorJoystickStep = 42069;
   public static final int armJoystickStep = 42069;
   public static final int maxLiftHeight = 42069;
+
+  public static final double EncoderUnitsToDistanceRatio = 42069.0;
 }

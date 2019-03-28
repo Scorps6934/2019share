@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -21,7 +20,7 @@ public class MoveElevator extends CommandBase {
   public MoveElevator(int height) {
     super("MoveElevator - auto");
     requires(Robot.selevator);
-    this.elevatorHeight = height;
+    this.elevatorHeight = height + Robot.selevator.getElevatorEncoderUnits();
   }
 
   // Called just before this Command runs the first time
@@ -32,7 +31,7 @@ public class MoveElevator extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.sarm.getArmEncoderUnits() > RobotMap.minArmForwardEncoderCount){
+    if(Robot.sarm.getArmEncoderUnits() > RobotMap.minArmForwardEncoderCount){ // making sure arm is in a place where we can move elevator
       if (this.elevatorHeight == null){
         int setpoint = Robot.selevator.getElevatorEncoderUnits() + (int)(Robot.oi.driveController.getRawAxis(RobotMap.gcLeftAxisY)*RobotMap.elevatorJoystickStep);
         setpoint = Math.min(setpoint, RobotMap.elevatorUpperLimit);
@@ -52,7 +51,7 @@ public class MoveElevator extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.selevator.getCurrentError()<RobotMap.elevatorAllowableError;
   }
 
   // Called once after isFinished returns true

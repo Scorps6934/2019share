@@ -44,7 +44,7 @@ public class S_Elevator extends Subsystem {
 
     
             motor.configSelectedFeedbackSensor(
-                    FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+                    FeedbackDevice.QuadEncoder, 0, 100);
           
 
     
@@ -208,7 +208,7 @@ public class S_Elevator extends Subsystem {
 
   //encoder stuff
   public void configElevatorEncoders(){
-    motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
   
   public void zeroElevatorEncoders(){
@@ -227,8 +227,9 @@ public class S_Elevator extends Subsystem {
       motor.set(ControlMode.Position, output); // this is where the computed output value fromthe PIDController is applied to the motor
 }
 */
-
-
+     public int getCurrentError(){
+        return motor.getClosedLoopError();
+     }
 
 
 }

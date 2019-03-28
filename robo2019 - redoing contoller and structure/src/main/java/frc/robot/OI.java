@@ -10,14 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.AlignToObjective;
 import frc.robot.commands.CargoManager;
 import frc.robot.commands.ChangeAutoSettings;
 import frc.robot.commands.DriveBrakes;
 import frc.robot.commands.DriveStraight;
-import frc.robot.commands.EncoderTest;
 import frc.robot.commands.MoveLift;
-import frc.robot.commands.MoveRamp;
+import frc.robot.commands.ToggleFlaps;
+import frc.robot.commands.ToggleHatch;
 import frc.robot.commands.ChangeAutoSettings.AutoSettings;
 
 /**
@@ -58,23 +57,16 @@ public class OI {
 
   public OI(){
 //driveCont
-  //driveButtonA.whenPressed(); // change ramping position 
-  //driveButtonB.whenPressed(); // change ramping position
-  //driveButtonX.whenPressed(); //deploy flaps (toggle)
-  driveButtonY.whenPressed(new ChangeAutoSettings(AutoSettings.TOGGLE_LIFT)); // toggle lift
-  driveButtonY.whenPressed(new MoveLift());
+  driveButtonX.whenPressed(new ToggleFlaps()); //deploy flaps (toggle)
+  driveButtonY.whenPressed(new MoveLift()); //toggle lift
   driveRightBumper.whileHeld(new DriveStraight()); // hold angle
-  driveLeftBumper.whenPressed(new DriveBrakes()); // brakes
+  driveLeftBumper.whileHeld(new DriveBrakes()); // brakes
 
-//TODO: Add align auto method 
-//weaponsCont'
-
- // weaponsButtonA.whileHeld(); //get ? auto
- // weaponsButtonB.whileHeld(new AlignToObjective()); //place ? auto
- // weaponsButtonX.whenPressed(); // shoot backwards into cargo bay ?
- // weaponsButtonY.whenPressed(); // flip arm (toggle?)
- // weaponsRightBumper.toggleWhenPressed(); // toggle hatch ?
- // weaponsStartButton. // nothing?
+ // weaponsButtonA.whileHeld(new AlignToObjective()); //place ? auto
+ // weaponsButtonB.whileHeld(); //get ? auto -- only useful for hatch pannel
+ 
+ 
+  weaponsRightBumper.whenPressed(new ToggleHatch());
   weaponsUp.whenPressed(new ChangeAutoSettings(AutoSettings.UP)); //changeheight for auto place
   weaponsDown.whenPressed(new ChangeAutoSettings(AutoSettings.DOWN)); //change height for auto place
   weaponsLeft.whenPressed(new ChangeAutoSettings(AutoSettings.CARGO)); //change mode for placement

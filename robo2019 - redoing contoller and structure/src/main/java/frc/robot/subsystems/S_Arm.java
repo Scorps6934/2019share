@@ -24,25 +24,13 @@ import frc.robot.RobotMap;
  */
 public class S_Arm extends Subsystem {
   TalonSRX motor = new TalonSRX(RobotMap.armTalonPort);
-/*
-  public S_Arm(){
-    super("S_Arm", RobotMap.Parm, RobotMap.Iarm, RobotMap.Darm);
-    setAbsoluteTolerance(0.05);
-    getPIDController().setContinuous(false);
 
-    // top PID
-    motor.config_kP(RobotMap.armTalonPort, RobotMap.Parm, RobotMap.kTimeoutMs);
-		motor.config_kI(RobotMap.armTalonPort, RobotMap.Iarm, RobotMap.kTimeoutMs);
-    motor.config_kD(RobotMap.armTalonPort, RobotMap.Darm, RobotMap.kTimeoutMs);	
-  //motor.config_kI(RobotMap.armTalonPort, RobotMap.Parm, 10);
-  } 
-*/
   public S_Arm(){
     //    motor = TalonSRXFactory.createDefaultTalon(Constants.karmMasterId); maybe?
 
     
     motor.configSelectedFeedbackSensor(
-      FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
+      FeedbackDevice.QuadEncoder, 0, 100);
 
 
 
@@ -206,7 +194,7 @@ public class S_Arm extends Subsystem {
 
 //encoders
   public void configArmEncoders(){
-    motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
 
   public void zeroArmEncoders(){
@@ -217,11 +205,8 @@ public class S_Arm extends Subsystem {
     return motor.getSelectedSensorPosition();
   }
 
-  public double returnPIDInput() {
-    return motor.getSelectedSensorPosition(); //returns the sensor value that is providing the feedback for the system
+  public int getCurrentError(){
+      return motor.getClosedLoopError();
   }
 
-  public void usePIDOutput(double output) {
-      motor.set(ControlMode.Position, output); // this is where the computed output value fromthe PIDController is applied to the motor
-  }
 }
