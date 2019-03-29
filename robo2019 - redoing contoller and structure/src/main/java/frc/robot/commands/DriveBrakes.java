@@ -7,10 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DriveBrakes extends CommandBase { //TODO: could make instant command?
+public class DriveBrakes extends CommandBase {
   public DriveBrakes() {
     super("DriveBrakes");
     requires(Robot.sdrive);

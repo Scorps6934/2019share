@@ -31,9 +31,11 @@ public class MoveElevator extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.sarm.getArmEncoderUnits() > RobotMap.minArmForwardEncoderCount){ // making sure arm is in a place where we can move elevator
+    Robot.selevator.moveElevator(Robot.oi.weaponsController.getRawAxis(RobotMap.gcLeftAxisY));
+    
+    /*  if(Robot.sarm.getArmEncoderUnits() > RobotMap.minArmForwardEncoderCount){ // making sure arm is in a place where we can move elevator
       if (this.elevatorHeight == null){
-        int setpoint = Robot.selevator.getElevatorEncoderUnits() + (int)(Robot.oi.driveController.getRawAxis(RobotMap.gcLeftAxisY)*RobotMap.elevatorJoystickStep);
+        int setpoint = Robot.selevator.getElevatorEncoderUnits() + (int)(Robot.oi.weaponsController.getRawAxis(RobotMap.gcLeftAxisY)*RobotMap.elevatorJoystickStep);
         setpoint = Math.min(setpoint, RobotMap.elevatorUpperLimit);
         setpoint = Math.max(setpoint, RobotMap.elevatorLowerLimit);
         Robot.selevator.setElevatorHeight(setpoint);
@@ -42,7 +44,7 @@ public class MoveElevator extends CommandBase {
         Robot.selevator.setElevatorHeight(this.elevatorHeight);
       }
     }
-
+*/
     
     
   }
@@ -52,7 +54,7 @@ public class MoveElevator extends CommandBase {
   @Override
   protected boolean isFinished() {
     return Robot.selevator.getCurrentError()<RobotMap.elevatorAllowableError;
-  }
+  } 
 
   // Called once after isFinished returns true
   @Override

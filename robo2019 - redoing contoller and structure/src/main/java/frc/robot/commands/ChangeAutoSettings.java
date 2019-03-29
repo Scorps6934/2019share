@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class ChangeAutoSettings extends InstantCommand { 
   public static int heightIndex = 0; // lowest height
-  public static int modeIndex = 0; //cargo mode (might want dashboard changes)
-  //TODO: have changeable depending on how we start the round
+  public static int modeIndex = 1; //hatch mode (might want dashboard changes)
 
   private AutoSettings option;
 

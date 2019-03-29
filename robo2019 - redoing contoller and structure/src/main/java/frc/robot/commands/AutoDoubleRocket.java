@@ -15,18 +15,20 @@ public class AutoDoubleRocket extends CommandGroup {
    */
   public AutoDoubleRocket() {
     
-    addSequential(new DriveToDistance(76.8025));
-    addSequential(new DriveAngleAdjustment(55.3238));
-    addSequential(new DriveToDistance(150.3987));
-    addSequential(new DriveAngleAdjustment(36.9164));
-    addSequential(new DriveToDistance(11.82));
+    addSequential(new DriveToDistance(86.3125));
+    addSequential(new DriveAngleAdjustment(90.0000));
+    addSequential(new DriveToDistance(61.6850));
+    addSequential(new DriveAngleAdjustment(-71.5884));
+    addSequential(new DriveToDistance(53.9828));
     addSequential(new ToggleHatch());
-    addSequential(new DriveToDistance(-11.82));
-    addSequential(new DriveAngleAdjustment(161.5884));
-    addSequential(new DriveToDistance(201.13));
+    addSequential(new DriveToDistance(-53.9828));
+    addSequential(new DriveAngleAdjustment(71.5884));
+    addSequential(new DriveToDistance(14.7924));
+    addSequential(new DriveAngleAdjustment(90.0000));
+    addSequential(new DriveToDistance(133.3125));
     addSequential(new ToggleHatch());
     addSequential(new DriveToDistance(-23.38));
-    addSequential(new DriveAngleAdjustment(174.1239));
+    addSequential(new DriveAngleAdjustment(-5.8761));
     addSequential(new DriveToDistance(-268.0283));
     addSequential(new DriveAngleAdjustment(95.8761));
     addSequential(new DriveToDistance(13.72));

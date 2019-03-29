@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -32,15 +31,25 @@ public class MoveArm extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(this.armPosition == null){
-      int setpoint = Robot.sarm.getArmEncoderUnits() + (int)(Robot.oi.driveController.getRawAxis(RobotMap.gcRightAxisY)*RobotMap.armJoystickStep);
-      setpoint = Math.min(setpoint, RobotMap.armForwardLimit);
-      setpoint = Math.max(setpoint, RobotMap.armBackwardLimit);
-      Robot.sarm.setArmPosition(setpoint);
+    Robot.sarm.moveArm(Robot.oi.weaponsController.getRawAxis(RobotMap.gcRightAxisY));
+  /*  if(this.armPosition == null){
+     // System.out.println("sees joystick input - enc: "+ Robot.sarm.getArmEncoderUnits());
+     double joystickInput = Robot.oi.weaponsController.getRawAxis(RobotMap.gcRightAxisY);
+      if (Math.abs(joystickInput) < .15){
+        joystickInput = 0;
+      }
+        int setpoint = Robot.sarm.getArmEncoderUnits() + (int)(joystickInput*RobotMap.armJoystickStep);
+
+      System.out.println("arm enc pos: "+ Robot.sarm.getArmEncoderUnits());
+      System.out.println("setpoint: " +setpoint);
+      if (setpoint < RobotMap.armForwardLimit && setpoint > RobotMap.armBackwardLimit){
+        Robot.sarm.setArmPosition(setpoint);
+      }
     }
     else {
       Robot.sarm.setArmPosition(this.armPosition);
     }
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()

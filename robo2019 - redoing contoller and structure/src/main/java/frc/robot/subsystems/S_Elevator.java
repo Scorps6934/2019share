@@ -15,7 +15,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveElevator;
@@ -118,42 +118,7 @@ public class S_Elevator extends Subsystem {
     
             motor.configMotionCruiseVelocity(
                     RobotMap.elevatorCruiseVelocity, RobotMap.kTimeoutMs);
-/*
-    //configure position PID
-    
-            motor.config_kP(
-                    kPositionControlSlot, Constants.kElevatorJogKp, RobotMap.kTimeoutMs);
 
-    
-            motor.config_kI(
-                    kPositionControlSlot, Constants.kElevatorHighGearKi, RobotMap.kTimeoutMs);
-
-    
-            motor.config_kD(
-                    kPositionControlSlot, Constants.kElevatorJogKd, RobotMap.kTimeoutMs);
-
-    
-            motor.configMaxIntegralAccumulator(
-                    kPositionControlSlot, Constants.kElevatorHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
-
-    
-            motor.config_IntegralZone(
-                    kPositionControlSlot, Constants.kElevatorHighGearIZone, RobotMap.kTimeoutMs);
-
-    
-            motor.configAllowableClosedloopError(
-                    kPositionControlSlot, Constants.kElevatorHighGearDeadband, RobotMap.kTimeoutMs);
-*/
-
- /*   TODO: add this?
-            motor.configClosedloopRamp(
-                    Constants.kElevatorRampRate, RobotMap.kTimeoutMs);
-
-    
-            motor.configOpenloopRamp(
-                    Constants.kElevatorRampRate, RobotMap.kTimeoutMs);
-
-  */  
 
   //TODO: may need to adjust values?
             motor.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
@@ -201,9 +166,6 @@ public class S_Elevator extends Subsystem {
 
   public void moveElevator(double speed){
     motor.set(ControlMode.PercentOutput, speed);
-  }
-  public void stopElevator(){
-    //TODO:PID loop
   }
 
   //encoder stuff

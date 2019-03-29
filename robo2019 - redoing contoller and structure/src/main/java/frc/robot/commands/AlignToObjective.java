@@ -56,7 +56,7 @@ public class AlignToObjective extends CommandGroup {
       depthDistance = Vision.calculateDepthDistance(angleToTurn, hypotenuseC);
       horizontalDistance = Vision.calculateHorizontalDistance(angleToTurn, hypotenuseC);
 
-      addSequential(new DriveAngleAdjustment(angleToTurn)); //TODO: add isFinished to commands? or maybe an addParallel instead
+      addSequential(new DriveAngleAdjustment(angleToTurn));
       addSequential(new DriveToDistance(horizontalDistance));
       addSequential(new DriveAngleAdjustment(90.0));
       addSequential(new DriveToDistance(depthDistance)); // TODO: Add translation math to account for arm and center

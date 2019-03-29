@@ -127,9 +127,9 @@ public static final int gcRightTriggerButton = 6;
   public static final int driveDistancePID = 4;
 
   //Arm
-  public static final int Parm = 0;
-  public static final int Iarm = 0;
-  public static final int Darm = 0;
+  public static final double Parm = .25; //TODO: set rest of pid constants to non-zero
+  public static final double Iarm = .25;
+  public static final double Darm =.25  ;
   public static final int armAllowableError = 1; //TODO: set these correctly
   public static final int armCruiseVelocity = 1;
   public static final int armAcceleration = 1;
@@ -179,13 +179,13 @@ public static final int gcRightTriggerButton = 6;
   public static final int elevatorUpperLimit = 99999;
   public static final int elevatorLowerLimit = 0;
   public static final int armForwardLimit = 0;
-  public static final int armBackwardLimit = 99999;
+  public static final int armBackwardLimit = -40;
   public static final int rampUpperLimit = 99999;
   public static final int rampLowerLimit = 0;
 
   public static final int minArmForwardEncoderCount = 42069; // when arm is past this point it is considered forward
   public static final int elevatorJoystickStep = 42069;
-  public static final int armJoystickStep = 42069;
+  public static final int armJoystickStep = 5;
   public static final int maxLiftHeight = 42069;
 
   public static final double EncoderUnitsToDistanceRatio = 42069.0;

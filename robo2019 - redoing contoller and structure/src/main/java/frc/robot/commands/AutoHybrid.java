@@ -15,20 +15,21 @@ public class AutoHybrid extends CommandGroup {
    */
   public AutoHybrid() {
     
-    addSequential(new DriveToDistance(173.25));// 173.25-24.5 when arm is extended out. fully extend the arm?
+    addSequential(new DriveToDistance(116.25));// 173.25-24.5 when arm is extended out. fully extend the arm?
     addSequential(new ToggleHatch());
+   //TODO: addSequential(new moveArm()); // add value
     //need to do math to find out how far back you need to move, because it does not take into account robot perimeter
-    addSequential(new DriveToDistance(-10.88));//backwords distance is negative? 
-    addSequential(new DriveAngleAdjustment(132.69));
-    addSequential(new DriveToDistance(168.27));
-    addSequential(new DriveAngleAdjustment(47.31));
+    addSequential(new DriveAngleAdjustment(124.2131));
+    addSequential(new DriveToDistance(149.7850));
+    addSequential(new DriveAngleAdjustment(55.7869));
+  //TODO:  addSequential(new moveArm()); // add value
     addSequential(new DriveToDistance(95.28));
-    // addSequential(new MoveArm(position)); set proper position
     addSequential(new ToggleHatch());
-    addSequential(new DriveToDistance(-177.75));
-    addSequential(new DriveAngleAdjustment(161.5884));
-    addSequential(new DriveToDistance(11.82));
-    // addSequential(new MoveArm(position)); set proper position
+    addSequential(new DriveToDistance(-133.3125));
+    addSequential(new DriveAngleAdjustment(-90.0000));
+    addSequential(new DriveToDistance(-14.7924));
+    addSequential(new DriveAngleAdjustment(-71.5884));
+    addSequential(new DriveToDistance(53.9828));
     addSequential(new ToggleHatch());
 
   }

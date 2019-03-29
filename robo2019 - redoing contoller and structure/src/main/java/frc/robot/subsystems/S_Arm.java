@@ -14,10 +14,9 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.MoveArm;
 
 /**
  * Add your docs here.
@@ -104,42 +103,7 @@ public class S_Arm extends Subsystem {
 
     motor.configMotionCruiseVelocity(
           RobotMap.armCruiseVelocity, RobotMap.kTimeoutMs);
-    /*
-    //configure position PID
 
-    motor.config_kP(
-          kPositionControlSlot, Constants.karmJogKp, RobotMap.kTimeoutMs);
-
-
-    motor.config_kI(
-          kPositionControlSlot, Constants.karmHighGearKi, RobotMap.kTimeoutMs);
-
-
-    motor.config_kD(
-          kPositionControlSlot, Constants.karmJogKd, RobotMap.kTimeoutMs);
-
-
-    motor.configMaxIntegralAccumulator(
-          kPositionControlSlot, Constants.karmHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
-
-
-    motor.config_IntegralZone(
-          kPositionControlSlot, Constants.karmHighGearIZone, RobotMap.kTimeoutMs);
-
-
-    motor.configAllowableClosedloopError(
-          kPositionControlSlot, Constants.karmHighGearDeadband, RobotMap.kTimeoutMs);
-    */
-
-    /*   TODO: add this?
-    motor.configClosedloopRamp(
-          Constants.karmRampRate, RobotMap.kTimeoutMs);
-
-
-    motor.configOpenloopRamp(
-          Constants.karmRampRate, RobotMap.kTimeoutMs);
-
-    */  
 
     //TODO: may need to adjust values?
     motor.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
@@ -156,7 +120,8 @@ public class S_Arm extends Subsystem {
     motor.configSetParameter(ParamEnum.eClearPositionOnLimitF, 0, 0, 0, 0);
     motor.configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 0);
 
-
+    
+    
     motor.selectProfileSlot(RobotMap.armPID, 0);
 
     motor.overrideLimitSwitchesEnable(true);
@@ -172,22 +137,22 @@ public class S_Arm extends Subsystem {
     motor.set(ControlMode.PercentOutput, 0);
 
     //TODO: do talonObject.setInverted(true) with correct motor
-  }
+    motor.setInverted(true);
+}
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new MoveArm());
   }
 
   public void setArmPosition(double setpoint){
     motor.set(ControlMode.MotionMagic, setpoint);
   }
- /* 
+
   public void moveArm(double speed){
     motor.set(ControlMode.PercentOutput, speed);
   }
-*/
+
   public void stopArm(){
     motor.set(ControlMode.PercentOutput, 0);
   }

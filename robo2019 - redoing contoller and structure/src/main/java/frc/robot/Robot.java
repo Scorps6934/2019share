@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
 
     sdrive.gyro.reset();
 
-// TODO: put this back
   // encoder set-up
     sdrive.configDriveEncoders();
     selevator.configElevatorEncoders();
@@ -175,7 +174,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = autoChooser.getSelected();
+ //TODO: fix autoChooser   m_autonomousCommand = autoChooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

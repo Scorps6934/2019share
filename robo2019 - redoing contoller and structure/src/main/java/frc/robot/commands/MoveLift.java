@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -56,6 +55,6 @@ public class MoveLift extends CommandBase {
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted() { //TODO: might need to add a stop motor here - don't really know when we would interrupt this - same with isFinished
   }
 }

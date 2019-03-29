@@ -10,22 +10,17 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveWheels;
 
@@ -124,49 +119,15 @@ public class S_DriveWheels extends Subsystem {
 
     //            lfMoto.config_IntegralZone(
     //                    RobotMap.drivePID, Constants.kDriveHighGearIZone, RobotMap.kTimeoutMs);
-//TODO: may need to fix by putting with select slot in commands
+
+
     lfMoto.configMotionAcceleration(
           RobotMap.driveAcceleration, RobotMap.kTimeoutMs);
 
 
     lfMoto.configMotionCruiseVelocity(
           RobotMap.driveCruiseVelocity, RobotMap.kTimeoutMs);
-    /*
-    //configure position PID
 
-    lfMoto.config_kP(
-          kPositionControlSlot, Constants.kDriveJogKp, RobotMap.kTimeoutMs);
-
-
-    lfMoto.config_kI(
-          kPositionControlSlot, Constants.kDriveHighGearKi, RobotMap.kTimeoutMs);
-
-
-    lfMoto.config_kD(
-          kPositionControlSlot, Constants.kDriveJogKd, RobotMap.kTimeoutMs);
-
-
-    lfMoto.configMaxIntegralAccumulator(
-          kPositionControlSlot, Constants.kDriveHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
-
-
-    lfMoto.config_IntegralZone(
-          kPositionControlSlot, Constants.kDriveHighGearIZone, RobotMap.kTimeoutMs);
-
-
-    lfMoto.configAllowableClosedloopError(
-          kPositionControlSlot, Constants.kDriveHighGearDeadband, RobotMap.kTimeoutMs);
-    */
-
-    /*   TODO: add this?
-    lfMoto.configClosedloopRamp(
-          Constants.kDriveRampRate, RobotMap.kTimeoutMs);
-
-
-    lfMoto.configOpenloopRamp(
-          Constants.kDriveRampRate, RobotMap.kTimeoutMs);
-
-    */  
 
     //TODO: may need to adjust values?
     lfMoto.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
@@ -203,9 +164,13 @@ public class S_DriveWheels extends Subsystem {
 //following lfMoto
     lbMoto.set(ControlMode.Follower, RobotMap.lfDrive);
     rfMoto.set(ControlMode.Follower, RobotMap.lfDrive);
-    rbMoto.set(ControlMode.Follower, RobotMap.rfDrive);
-    //TODO: do talonObject.setInverted(true) with correct motor (invert lf or rf)
-  }
+    rbMoto.set(ControlMode.Follower, RobotMap.lfDrive);
+    
+    
+    lfMoto.setInverted(true);
+    lbMoto.setInverted(true);
+
+}
 
   @Override
   public void initDefaultCommand() {
@@ -253,8 +218,7 @@ public class S_DriveWheels extends Subsystem {
     rbMoto.getSensorCollection().setQuadraturePosition(0, RobotMap.kTimeoutMs);
   }
 
-  //TODO: get encoder values from other side maybe? and/or average the two sides?
-  public int getDriveEncoderUnits(){
+  public int getDriveEncoderUnits(){ // only used for pid and all drive motors follow lfMoto
     return lfMoto.getSelectedSensorPosition();
   }
 

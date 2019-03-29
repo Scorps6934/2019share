@@ -112,42 +112,7 @@ public class S_Ramp extends Subsystem {
 
     leftMotor.configMotionCruiseVelocity(
           RobotMap.rampCruiseVelocity, RobotMap.kTimeoutMs);
-    /*
-    //configure position PID
 
-    leftMotor.config_kP(
-          kPositionControlSlot, Constants.kRampJogKp, RobotMap.kTimeoutMs);
-
-
-    leftMotor.config_kI(
-          kPositionControlSlot, Constants.kRampHighGearKi, RobotMap.kTimeoutMs);
-
-
-    leftMotor.config_kD(
-          kPositionControlSlot, Constants.kRampJogKd, RobotMap.kTimeoutMs);
-
-
-    leftMotor.configMaxIntegralAccumulator(
-          kPositionControlSlot, Constants.kRampHighGearMaxIntegralAccumulator, RobotMap.kTimeoutMs);
-
-
-    leftMotor.config_IntegralZone(
-          kPositionControlSlot, Constants.kRampHighGearIZone, RobotMap.kTimeoutMs);
-
-
-    leftMotor.configAllowableClosedloopError(
-          kPositionControlSlot, Constants.kRampHighGearDeadband, RobotMap.kTimeoutMs);
-    */
-
-    /*   TODO: add this?
-    leftMotor.configClosedloopRamp(
-          Constants.kRampRampRate, RobotMap.kTimeoutMs);
-
-
-    leftMotor.configOpenloopRamp(
-          Constants.kRampRampRate, RobotMap.kTimeoutMs);
-
-    */
 
     //TODO: may need to adjust values?
     leftMotor.configContinuousCurrentLimit(20, RobotMap.kTimeoutMs);
@@ -183,6 +148,7 @@ public class S_Ramp extends Subsystem {
     rightMotor.set(ControlMode.Follower, RobotMap.rampTalonPort1); // following leftMotor
     
     //TODO: do talonObject.setInverted(true) with correct motor
+    
   }
 
 
