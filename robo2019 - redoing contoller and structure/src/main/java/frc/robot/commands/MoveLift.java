@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+/*
 public class MoveLift extends CommandBase {
   private boolean liftIsUp = false;
 
@@ -58,3 +58,4 @@ public class MoveLift extends CommandBase {
   protected void interrupted() { //TODO: might need to add a stop motor here - don't really know when we would interrupt this - same with isFinished
   }
 }
+*/

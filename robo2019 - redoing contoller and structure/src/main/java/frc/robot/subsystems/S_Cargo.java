@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -19,7 +22,8 @@ import frc.robot.RobotMap;
  */
 public class S_Cargo extends Subsystem {
   DigitalInput limitswitch = new DigitalInput(RobotMap.cargoLimitSwitch);
-  WPI_VictorSPX motor = new WPI_VictorSPX(RobotMap.cargoVictorPort);
+ // private TalonSRX motor = new TalonSRX();
+  WPI_TalonSRX motor = new WPI_TalonSRX(RobotMap.cargoTalonPort);
 
   @Override
   public void initDefaultCommand() {
@@ -28,17 +32,22 @@ public class S_Cargo extends Subsystem {
   }
 
   public void setShooterSpeed(double speed){
-    System.out.println("before shooter");
-    System.out.println();
-    if (!limitswitch.get()){ //TODO: make sure limitswitch in correct position
-    System.out.println("shooter");
-      motor.set(speed*.5);
+  //  System.out.println(speed);
+    motor.set(ControlMode.PercentOutput, speed);
+  /*  if (!limitswitch.get()){ //TODO: make sure limitswitch in correct position
+   // System.out.println("shooter");
+      motor.set(ControlMode.PercentOutput, speed);
     }
     else {
-      motor.set(0);
+      motor.set(ControlMode.PercentOutput, 0);
     }
+*/
   }
   public void stopShooter(){
-    motor.set(0);
+    motor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void resetCargoTalon(){
+    motor.configFactoryDefault();
   }
 }

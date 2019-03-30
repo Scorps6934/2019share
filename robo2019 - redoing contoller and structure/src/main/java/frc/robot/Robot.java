@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,7 +23,7 @@ import frc.robot.subsystems.S_Cargo;
 import frc.robot.subsystems.S_DriveWheels;
 import frc.robot.subsystems.S_Elevator;
 import frc.robot.subsystems.S_Hatch;
-import frc.robot.subsystems.S_Ramp;
+//import frc.robot.subsystems.S_Ramp;
 
 import frc.robot.Vision;
 
@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   public static S_DriveWheels sdrive = new S_DriveWheels();
   public static S_Elevator selevator = new S_Elevator();
   public static S_Hatch shatch = new S_Hatch();
-  public static S_Ramp sramp = new S_Ramp();
+ // public static S_Ramp sramp = new S_Ramp();
 
   private static AnalogInput distanceSensor;
 
@@ -95,18 +95,21 @@ public class Robot extends TimedRobot {
   // encoder set-up
     sdrive.configDriveEncoders();
     selevator.configElevatorEncoders();
-    sramp.configRampEncoders();
+  //  sramp.configRampEncoders();
     sarm.configArmEncoders();
 
     sdrive.zeroDriveEncoders();
     selevator.zeroElevatorEncoders();
-    sramp.zeroRampEncoders();
+ //   sramp.zeroRampEncoders();
     sarm.zeroArmEncoders();
 
+    scargo.resetCargoTalon();
 
+    CameraServer.getInstance().startAutomaticCapture();
 
 
   // openCv and vision stuff
+  /*
     new Thread(() -> {
       leftVisionProcessor.setupCameraSettings();
       leftVisionProcessor.setupThresholding();
@@ -120,7 +123,8 @@ public class Robot extends TimedRobot {
       rightVisionProcessor.setupContours();
       rightVisionProcessor.filterAndDrawContours(); //TODO: might need while loop?
     }).start();
-
+*/
+    
 
 //    CameraServer.getInstance().startAutomaticCapture();
 //    CameraServer.getInstance().startAutomaticCapture();

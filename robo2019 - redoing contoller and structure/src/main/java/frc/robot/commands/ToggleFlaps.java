@@ -14,6 +14,7 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
+/*
 public class ToggleFlaps extends InstantCommand {
   private boolean flapsAreOpen = false;
 
@@ -35,3 +36,4 @@ public class ToggleFlaps extends InstantCommand {
   }
 
 }
+*/

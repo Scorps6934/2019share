@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.ParamEnum;
@@ -19,10 +19,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Counter;
-
+*/
 /**
  * Ramp subsystem includes lift motors and pneumatics for flaps
  */
+/*
 public class S_Ramp extends Subsystem {
 //lift  
 //  DigitalInput limitswitch = new DigitalInput(RobotMap.rampLimitSwitch);
@@ -175,6 +176,7 @@ public class S_Ramp extends Subsystem {
   }
   
 */
+/*
 	public void openFlaps() {
 		solenoid.set(DoubleSolenoid.Value.kForward);
 	}
@@ -209,3 +211,4 @@ public class S_Ramp extends Subsystem {
   }
 
 }
+*/

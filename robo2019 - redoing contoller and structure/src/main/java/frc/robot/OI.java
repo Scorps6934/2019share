@@ -14,8 +14,8 @@ import frc.robot.commands.CargoManager;
 import frc.robot.commands.ChangeAutoSettings;
 import frc.robot.commands.DriveBrakes;
 import frc.robot.commands.DriveStraight;
-import frc.robot.commands.MoveLift;
-import frc.robot.commands.ToggleFlaps;
+//import frc.robot.commands.MoveLift;
+//import frc.robot.commands.ToggleFlaps;
 import frc.robot.commands.ToggleHatch;
 import frc.robot.commands.ChangeAutoSettings.AutoSettings;
 
@@ -57,8 +57,8 @@ public class OI {
 
   public OI(){
 //driveCont
-  driveButtonX.whenPressed(new ToggleFlaps()); //deploy flaps (toggle)
-  driveButtonY.whenPressed(new MoveLift()); //toggle lift
+// driveButtonX.whenPressed(new ToggleFlaps()); //deploy flaps (toggle)
+//  driveButtonY.whenPressed(new MoveLift()); //toggle lift
   driveRightBumper.whileHeld(new DriveStraight()); // hold angle
   driveLeftBumper.whileHeld(new DriveBrakes()); // brakes
 
@@ -72,8 +72,8 @@ public class OI {
   weaponsLeft.whenPressed(new ChangeAutoSettings(AutoSettings.CARGO)); //change mode for placement
   weaponsRight.whenPressed(new ChangeAutoSettings(AutoSettings.HATCH)); // change mode for placement
   
-  weaponsLeftTrigger.whileHeld(new CargoManager(-1)); //manual intake (should have dirs for CargoManager be enum)
-  weaponsRightTrigger.whileHeld(new CargoManager(1)); // manual extake
+  weaponsButtonA.whileHeld(new CargoManager(-1.0)); //manual intake (should have dirs for CargoManager be enum)
+  weaponsButtonB.whileHeld(new CargoManager(1.0)); // manual extake
 
     
   }

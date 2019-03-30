@@ -10,7 +10,7 @@ package frc.robot.commands;
 import frc.robot.Robot;
 
 public class CargoManager extends CommandBase {
-  private Double dir;
+  private double dir;
 
   public CargoManager(double dir) {
     // Use requires() here to declare subsystem dependencies
@@ -22,6 +22,7 @@ public class CargoManager extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -45,6 +46,7 @@ public class CargoManager extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("interupt");
     Robot.scargo.stopShooter();
   }
 }

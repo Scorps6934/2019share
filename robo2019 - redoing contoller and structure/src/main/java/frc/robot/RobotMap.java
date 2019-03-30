@@ -104,14 +104,14 @@ public static final int gcRightTriggerButton = 6;
   public static final int rbDrive = 14;
 
   // ramp (2 motors)
-  public static final int rampTalonPort1 = 12;
+  public static final int rampTalonPort1 = 4;
   public static final int rampTalonPort2 = 13;
   
   // elevator (1 motor)
   public static final int elevatorTalonPort = 1;
 
   // cargo (1 motor & 1 limitswitch)
-  public static final int cargoVictorPort = 4;
+  public static final int cargoTalonPort = 12;
   public static final int cargoLimitSwitch = 0;
 
   // arm (1 motor)
