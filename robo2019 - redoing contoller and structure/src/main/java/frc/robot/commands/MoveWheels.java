@@ -7,10 +7,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class MoveWheels extends CommandBase {
+public class MoveWheels extends Command {
 
   public MoveWheels() {
     super("moveWheels with stick");

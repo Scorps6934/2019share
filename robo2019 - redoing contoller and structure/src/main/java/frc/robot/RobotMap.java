@@ -27,9 +27,7 @@ public class RobotMap {
   //hatch
   public static final int hatchSolenoidForward = 4;
   public static final int hatchSolenoidReverse = 7;
-  //ramp
-  public static final int rampSolenoidForward = 5;
-  public static final int rampSolenoidReverse = 6;
+
 
 //controllers
   public static final int logitechDriveCont = 0;
@@ -69,12 +67,12 @@ public class RobotMap {
   public static final int gcLeftAxisY = 1;
   public static final int gcRightAxisX = 5; // c stick
   public static final int gcRightAxisY = 2;
-//triggers analog (probs not used) -- ignore
+  //triggers analog (probs not used) -- ignore
   public static final int gcLeftTrigger = 3; 
   public static final int gcRightTrigger = 4;
-//trigger digital (buttons)
-public static final int gcLeftTriggerButton = 5;
-public static final int gcRightTriggerButton = 6;
+  //trigger digital (buttons)
+  public static final int gcLeftTriggerButton = 5;
+  public static final int gcRightTriggerButton = 6;
 
 
 
@@ -89,7 +87,7 @@ public static final int gcRightTriggerButton = 6;
   public static final int contourMaxArea = 100000;
   public static final double contourMinRatio = 0.7;
   public static final double contourMaxRatio = 1.5;
-
+  
   public static final double FOV = 61.39;
   public static final double imageWidth=360;
   public static final double imageHeight=360;
@@ -103,36 +101,19 @@ public static final int gcRightTriggerButton = 6;
   public static final int rfDrive = 15;
   public static final int rbDrive = 14;
 
-  // ramp (2 motors)
-  public static final int rampTalonPort1 = 4;
-  public static final int rampTalonPort2 = 13;
-  
-  // elevator (1 motor)
-  public static final int elevatorTalonPort = 1;
+  //pump/climb
+  public static final int rightClimberTalonPort = 13;
+  public static final int leftClimberTalonPort = 12;
+  public static final int pump = 1;
 
-  // cargo (1 motor & 1 limitswitch)
-  public static final int cargoTalonPort = 12;
-  public static final int cargoLimitSwitch = 0;
-
-  // arm (1 motor)
-  public static final int armTalonPort = 0;
+ // armTalonPort = 0;
 
 
 //PID
   //pid slots
-  public static final int elevatorPID = 0;
-  public static final int armPID = 1;
-  public static final int rampPID = 2; 
-  public static final int driveAnglePID = 3;
-  public static final int driveDistancePID = 4;
+  public static final int driveAnglePID = 0;
+  public static final int driveDistancePID = 1;
 
-  //Arm
-  public static final double Parm = .25; //TODO: set rest of pid constants to non-zero
-  public static final double Iarm = .25;
-  public static final double Darm =.25  ;
-  public static final int armAllowableError = 1; //TODO: set these correctly
-  public static final int armCruiseVelocity = 1;
-  public static final int armAcceleration = 1;
 
   //Drive (p, i, and d constants and allowable error all per PID port)
   public static final int PdriveAngle = 0;
@@ -147,46 +128,9 @@ public static final int gcRightTriggerButton = 6;
   public static final int driveCruiseVelocity = 1;
   public static final int driveAcceleration = 1;
 
-  //Elevator
-  public static final int Pelevator = 0;
-  public static final int Ielevator = 0;
-  public static final int Delevator = 0;
-  public static final int elevatorAllowableError = 1; //TODO: set these correctly
-  public static final int elevatorCruiseVelocity = 1;
-  public static final int elevatorAcceleration = 1;
-
-  //Ramp
-  public static final int Pramp = 0;
-  public static final int Iramp = 0;
-  public static final int Dramp = 0;
-  public static final int rampAllowableError = 1; //TODO: set these correctly
-  public static final int rampCruiseVelocity = 1;
-  public static final int rampAcceleration = 1;
-
-  //Robot and Field measurements
-  public static final double armLengthHatch = 1.0;      //feet
-  public static final double armLengthCargo = 1.0;      //feet
-  public static final double camToBackDistance = 1.0;   //feet
-  public static final double camToCenterDistance = 1.0; //feet
-  public static final double backwardShotAngle = 45.0;  //degrees
-  public static final double cargoShotAngle = 45.0;     //degrees
-  public static final double cargoCatchAngle = 45.0;    //degrees
-  public static final double tapeLength = 1.5;          //feet
- 
-  
-
-//talon software limitSwitches
-  public static final int elevatorUpperLimit = 99999;
-  public static final int elevatorLowerLimit = 0;
-  public static final int armForwardLimit = 0;
-  public static final int armBackwardLimit = -40;
-  public static final int rampUpperLimit = 99999;
-  public static final int rampLowerLimit = 0;
 
   public static final int minArmForwardEncoderCount = 42069; // when arm is past this point it is considered forward
-  public static final int elevatorJoystickStep = 42069;
-  public static final int armJoystickStep = 5;
-  public static final int maxLiftHeight = 42069;
+
 
   public static final double EncoderUnitsToDistanceRatio = 42069.0;
 }

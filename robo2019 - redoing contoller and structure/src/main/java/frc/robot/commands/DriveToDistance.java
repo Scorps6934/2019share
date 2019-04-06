@@ -7,10 +7,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class DriveToDistance extends CommandBase {
+public class DriveToDistance extends Command {
   private int targetDistanceInEncoderUnits;
   public DriveToDistance(double distanceInInches) {
     super("DriveToDistance");

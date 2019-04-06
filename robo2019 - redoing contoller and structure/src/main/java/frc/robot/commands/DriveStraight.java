@@ -7,10 +7,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class DriveStraight extends CommandBase {
+public class DriveStraight extends Command {
   private double currentSavedAngle;
   public DriveStraight() {
     super("DriveStraight");
@@ -20,14 +21,14 @@ public class DriveStraight extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.sdrive.selectDriveAnglePID();
-    currentSavedAngle = Robot.sdrive.getCurrentAngle();
+  //  Robot.sdrive.selectDriveAnglePID();                 //for pid
+ //   currentSavedAngle = Robot.sdrive.getCurrentAngle(); //for pid
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.sdrive.setDriveAngle(this.currentSavedAngle);
+  //  Robot.sdrive.setDriveAngle(this.currentSavedAngle); //for pid
     Robot.sdrive.adjustSpeed(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY), Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY));
   }
 

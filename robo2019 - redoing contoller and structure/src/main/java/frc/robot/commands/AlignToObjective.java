@@ -23,18 +23,8 @@ public class AlignToObjective extends CommandGroup {
   private double depthDistance;
   private double horizontalDistance;
 
-  enum GamePiece{
-    CARGO,
-    HATCH
-  }
 
-  enum ElevatorHeight{ //for true auto?
-    LOW,
-    MID,
-    HIGH
-  }
-
-  public AlignToObjective(GamePiece gamepeice, ElevatorHeight elevatorheight){
+  public AlignToObjective(){ //only does low level hatch
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -61,13 +51,7 @@ public class AlignToObjective extends CommandGroup {
       addSequential(new DriveAngleAdjustment(90.0));
       addSequential(new DriveToDistance(depthDistance)); // TODO: Add translation math to account for arm and center
       
-      // shooting
-      // TODO: will use switch statement to set encoder distances based on different heights/goals
-      /*
-      addSequential(new MoveArm(encodernunits1)); // be careful to make this so arm is in a position for shooting first cargo
-      addSequential(new MoveElevator(encoderunits2));
-      addSequential(new CargoManager(speed/dir));
-      */
+      //TODO: auto align for grabbing/placing hatches - maybe
 
     }
 

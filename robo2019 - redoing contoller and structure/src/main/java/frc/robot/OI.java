@@ -10,14 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.CargoManager;
-import frc.robot.commands.ChangeAutoSettings;
 import frc.robot.commands.DriveBrakes;
 import frc.robot.commands.DriveStraight;
 //import frc.robot.commands.MoveLift;
 //import frc.robot.commands.ToggleFlaps;
 import frc.robot.commands.ToggleHatch;
-import frc.robot.commands.ChangeAutoSettings.AutoSettings;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -57,25 +54,24 @@ public class OI {
 
   public OI(){
 //driveCont
-// driveButtonX.whenPressed(new ToggleFlaps()); //deploy flaps (toggle)
-//  driveButtonY.whenPressed(new MoveLift()); //toggle lift
   driveRightBumper.whileHeld(new DriveStraight()); // hold angle
-  driveLeftBumper.whileHeld(new DriveBrakes()); // brakes
+ // driveLeftBumper.whileHeld(new DriveBrakes()); // brakes
 
- // weaponsButtonA.whileHeld(new AlignToObjective()); //place ? auto
- // weaponsButtonB.whileHeld(); //get ? auto -- only useful for hatch pannel
- 
- 
-  weaponsRightBumper.whenPressed(new ToggleHatch());
-  weaponsUp.whenPressed(new ChangeAutoSettings(AutoSettings.UP)); //changeheight for auto place
-  weaponsDown.whenPressed(new ChangeAutoSettings(AutoSettings.DOWN)); //change height for auto place
-  weaponsLeft.whenPressed(new ChangeAutoSettings(AutoSettings.CARGO)); //change mode for placement
-  weaponsRight.whenPressed(new ChangeAutoSettings(AutoSettings.HATCH)); // change mode for placement
-  
-  weaponsButtonA.whileHeld(new CargoManager(-1.0)); //manual intake (should have dirs for CargoManager be enum)
-  weaponsButtonB.whileHeld(new CargoManager(1.0)); // manual extake
 
-    
+ 
+//weaponsCont
+  //weaponsRightBumper.whenPressed(new ToggleHatch());
+
+  }
+
+  public boolean getPump(){
+    return weaponsController.getRawButton(RobotMap.gcButtonX);
+  }
+  public boolean getClimb(){
+    return weaponsController.getRawButton(RobotMap.gcButtonY);
+  }
+  public boolean dropClimb(){
+    return weaponsController.getRawButton(RobotMap.gcRightBumper);
   }
   
 

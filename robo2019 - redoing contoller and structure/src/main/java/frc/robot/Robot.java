@@ -18,10 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoDoubleRocket;
 import frc.robot.commands.AutoDoubleShuttle;
 import frc.robot.commands.AutoHybrid;
-import frc.robot.subsystems.S_Arm;
-import frc.robot.subsystems.S_Cargo;
+import frc.robot.subsystems.S_Climber;
 import frc.robot.subsystems.S_DriveWheels;
-import frc.robot.subsystems.S_Elevator;
 import frc.robot.subsystems.S_Hatch;
 //import frc.robot.subsystems.S_Ramp;
 
@@ -42,20 +40,18 @@ public class Robot extends TimedRobot {
   Compressor compressor = new Compressor(RobotMap.compressorPort);
   
   // subsystems
-  public static S_Arm sarm = new S_Arm();
-  public static S_Cargo scargo = new S_Cargo();
   public static S_DriveWheels sdrive = new S_DriveWheels();
-  public static S_Elevator selevator = new S_Elevator();
+//  public static S_Elevator selevator = new S_Elevator();
   public static S_Hatch shatch = new S_Hatch();
  // public static S_Ramp sramp = new S_Ramp();
-
-  private static AnalogInput distanceSensor;
+  public static S_Climber sclimber = new S_Climber();
 
   Command m_autonomousCommand;
   SendableChooser<Command> autoChooser;
 
   public static Vision leftVisionProcessor = new Vision("camera1");
   public static Vision rightVisionProcessor = new Vision("camera2");
+
 
   // MoveWheels wheels;
   // WPI_TalonSRX testMotor;
@@ -70,42 +66,34 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
+/*
     autoChooser = new SendableChooser<>();
-    //autoChooser.setDefaultOption("left auto", new autoLeft());
     autoChooser.setDefaultOption("one shuttle, one rocket", new AutoHybrid());
     autoChooser.addOption("two shuttle", new AutoDoubleShuttle());
     autoChooser.addOption("two rocket", new AutoDoubleRocket());
-		//autoChooser.addOption("right auto", new autoRight());
-		//autoChooser.addDefault("safe auto",  new autoSafe());
-		SmartDashboard.putData("select auto", autoChooser);
-		
-		autoChooser.getSelected();
+    SmartDashboard.putData("select auto", autoChooser);
+    autoChooser.getSelected();
+  */
 
-    System.out.println("robo initiation cerimony");
+ 
     oi = new OI();
 
 
     compressor.setClosedLoopControl(true);
 
-    distanceSensor = new AnalogInput(RobotMap.distanceSensorPort);
 
     sdrive.gyro.reset();
 
   // encoder set-up
     sdrive.configDriveEncoders();
-    selevator.configElevatorEncoders();
-  //  sramp.configRampEncoders();
-    sarm.configArmEncoders();
-
     sdrive.zeroDriveEncoders();
-    selevator.zeroElevatorEncoders();
- //   sramp.zeroRampEncoders();
-    sarm.zeroArmEncoders();
 
-    scargo.resetCargoTalon();
+ 
+
+
 
     CameraServer.getInstance().startAutomaticCapture();
+
 
 
   // openCv and vision stuff
@@ -124,19 +112,7 @@ public class Robot extends TimedRobot {
       rightVisionProcessor.filterAndDrawContours(); //TODO: might need while loop?
     }).start();
 */
-    
 
-//    CameraServer.getInstance().startAutomaticCapture();
-//    CameraServer.getInstance().startAutomaticCapture();
-  //  leftCamera = new UsbCamera("Left Camera", 1);
-  //  rightCamera = new UsbCamera("Right Camera", 2);
-
-
-  //wheels = new MoveWheels();
-    
-
-    // chooser.addObject("My Auto", new MyAutoCommand());
-    //SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -222,6 +198,23 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    if(oi.getClimb()){
+      sclimber.setClimbRaw(-1);
+    }
+    else if(oi.dropClimb()){
+      sclimber.setClimbRaw(1);
+    }
+    else{
+      sclimber.setClimbRaw(0);
+    }
+
+    if(oi.getPump()){
+      sclimber.setPumpRaw(0.5);
+    }
+    else{
+      sclimber.setPumpRaw(0);
+    }
+
     //System.out.println("hiiiiiiiii");
     //System.out.println("Value: " + ((distanceSensor.getVoltage()*1024.0)/25.4)); // volatage to inches
   }
