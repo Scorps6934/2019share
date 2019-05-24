@@ -60,7 +60,7 @@ public class OI {
 
  
 //weaponsCont
-  //weaponsRightBumper.whenPressed(new ToggleHatch());
+  weaponsButtonA.whenPressed(new ToggleHatch());
 
   }
 

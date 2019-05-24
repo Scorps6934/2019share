@@ -24,18 +24,18 @@ public class S_Climber extends Subsystem {
 
   TalonSRX mpump;
   TalonSRX rightClimberMotor; 
-  TalonSRX leftClimberMotor;
+  //TalonSRX leftClimberMotor;
     public S_Climber(){
       mpump = new TalonSRX(RobotMap.pump);
       rightClimberMotor = new TalonSRX(RobotMap.rightClimberTalonPort);
-      leftClimberMotor = new TalonSRX(RobotMap.leftClimberTalonPort);
+    //  leftClimberMotor = new TalonSRX(RobotMap.leftClimberTalonPort);
 
       mpump.setNeutralMode(NeutralMode.Brake);
     }
 
     public void setClimbRaw(double power){
       rightClimberMotor.set(ControlMode.PercentOutput, power);
-      leftClimberMotor.set(ControlMode.PercentOutput, -power); // TODO: make sure both go in same direction physically
+      //leftClimberMotor.set(ControlMode.PercentOutput, -power); // TODO: make sure both go in same direction physically
     }
     public void setPumpRaw(double power){
       mpump.set(ControlMode.PercentOutput, power);

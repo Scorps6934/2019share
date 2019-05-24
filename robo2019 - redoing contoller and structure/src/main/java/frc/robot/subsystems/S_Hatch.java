@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -15,7 +19,12 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class S_Hatch extends Subsystem {
+	TalonSRX pump = new TalonSRX(RobotMap.hatchPumpTalon);
   DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.hatchSolenoidForward, RobotMap.hatchSolenoidReverse);
+
+	public S_Hatch(){
+		pump.setNeutralMode(NeutralMode.Brake);
+	}
 
   @Override
   public void initDefaultCommand() {
@@ -23,12 +32,15 @@ public class S_Hatch extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+	public void setHatchPumpRaw(double power){
+		pump.set(ControlMode.PercentOutput, power);
+	}
 
-	public void openHatch() {
+	public void useSuctionValve() {
 		solenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
-	public void closeHatch() {
+	public void useFreeValve() {
 		solenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 

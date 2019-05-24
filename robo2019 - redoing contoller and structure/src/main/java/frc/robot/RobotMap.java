@@ -25,6 +25,7 @@ public class RobotMap {
   public static final int compressorPort = 0;
   public static final int pcmPort = 0;
   //hatch
+  public static final int hatchPumpTalon = 12;
   public static final int hatchSolenoidForward = 4;
   public static final int hatchSolenoidReverse = 7;
 
@@ -103,7 +104,6 @@ public class RobotMap {
 
   //pump/climb
   public static final int rightClimberTalonPort = 13;
-  public static final int leftClimberTalonPort = 12;
   public static final int pump = 1;
 
  // armTalonPort = 0;
