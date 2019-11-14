@@ -10,8 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.DriveBrakes;
-import frc.robot.commands.DriveStraight;
+//import frc.robot.commands.DriveBrakes;
+//import frc.robot.commands.DriveStraight;
 //import frc.robot.commands.MoveLift;
 //import frc.robot.commands.ToggleFlaps;
 import frc.robot.commands.ToggleHatch;
@@ -54,24 +54,23 @@ public class OI {
 
   public OI(){
 //driveCont
-  driveRightBumper.whileHeld(new DriveStraight()); // hold angle
+  //driveRightBumper.whileHeld(new DriveStraight()); // hold angle
  // driveLeftBumper.whileHeld(new DriveBrakes()); // brakes
-
 
  
 //weaponsCont
-  weaponsButtonA.whenPressed(new ToggleHatch());
+  //weaponsRightBumper.whenPressed(new ToggleHatch());
 
   }
 
   public boolean getPump(){
-    return weaponsController.getRawButton(RobotMap.gcButtonX);
+    return weaponsController.getRawButton(RobotMap.buttonY);
   }
   public boolean getClimb(){
-    return weaponsController.getRawButton(RobotMap.gcButtonY);
+    return weaponsController.getRawButton(RobotMap.buttonB);
   }
   public boolean dropClimb(){
-    return weaponsController.getRawButton(RobotMap.gcRightBumper);
+    return weaponsController.getRawButton(RobotMap.rightTrigger);
   }
   
 

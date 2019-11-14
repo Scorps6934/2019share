@@ -14,25 +14,21 @@ import frc.robot.Robot;
  * Add your docs here.
  */
 public class ToggleHatch extends InstantCommand {
-  private boolean solenoidIsHolding = false; 
+  private boolean hatchIsOpen = false; 
   public ToggleHatch() {
     super("ToggleHatch");
     requires(Robot.shatch);
-    Robot.shatch.useSuctionValve(); 
-    Robot.shatch.setHatchPumpRaw(1);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    solenoidIsHolding = !solenoidIsHolding;
-    if (solenoidIsHolding){
-      Robot.shatch.useSuctionValve(); 
-      Robot.shatch.setHatchPumpRaw(1);
-    }  
+    hatchIsOpen = !hatchIsOpen;
+    if (hatchIsOpen){
+      Robot.shatch.openHatch();
+    }
     else {
-      Robot.shatch.useFreeValve();
-      Robot.shatch.setHatchPumpRaw(1);
+      Robot.shatch.closeHatch();
     }
   }
 

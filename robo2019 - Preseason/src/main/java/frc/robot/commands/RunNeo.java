@@ -9,11 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class DriveBrakes extends Command {
-  public DriveBrakes() {
-    super("DriveBrakes");
-    requires(Robot.sdrive);
+public class RunNeo extends Command {
+  public RunNeo() {
+    requires(Robot.sneo);
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +26,7 @@ public class DriveBrakes extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.sdrive.stopWheels();
+    Robot.sneo.runMotor(Robot.oi.driveController.getRawAxis(RobotMap.leftAxisY));
   }
 
   // Make this return true when this Command no longer needs to run execute()

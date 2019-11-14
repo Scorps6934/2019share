@@ -25,7 +25,6 @@ public class RobotMap {
   public static final int compressorPort = 0;
   public static final int pcmPort = 0;
   //hatch
-  public static final int hatchPumpTalon = 12;
   public static final int hatchSolenoidForward = 4;
   public static final int hatchSolenoidReverse = 7;
 
@@ -97,13 +96,14 @@ public class RobotMap {
 
 //talon ports + limitswitches
   // driveWheels (4 motors)
-  public static final int lfDrive = 3;
+  public static final int NEO1 = 3;
   public static final int lbDrive = 2;
   public static final int rfDrive = 15;
   public static final int rbDrive = 14;
 
   //pump/climb
   public static final int rightClimberTalonPort = 13;
+  public static final int leftClimberTalonPort = 12;
   public static final int pump = 1;
 
  // armTalonPort = 0;

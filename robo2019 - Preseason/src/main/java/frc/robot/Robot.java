@@ -15,14 +15,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AutoDoubleRocket;
-import frc.robot.commands.AutoDoubleShuttle;
-import frc.robot.commands.AutoHybrid;
+//import frc.robot.commands.AutoDoubleRocket;
+//import frc.robot.commands.AutoDoubleShuttle;
+//import frc.robot.commands.AutoHybrid;
 import frc.robot.subsystems.S_Climber;
-import frc.robot.subsystems.S_DriveWheels;
+//import frc.robot.subsystems.S_DriveWheels;
 import frc.robot.subsystems.S_Hatch;
 //import frc.robot.subsystems.S_Ramp;
-
+import frc.robot.subsystems.S_Neo;
 import frc.robot.Vision;
 
 /**
@@ -40,11 +40,14 @@ public class Robot extends TimedRobot {
   Compressor compressor = new Compressor(RobotMap.compressorPort);
   
   // subsystems
-  public static S_DriveWheels sdrive = new S_DriveWheels();
+  //public static S_DriveWheels sdrive = new S_DriveWheels();
 //  public static S_Elevator selevator = new S_Elevator();
   public static S_Hatch shatch = new S_Hatch();
  // public static S_Ramp sramp = new S_Ramp();
   public static S_Climber sclimber = new S_Climber();
+
+  //Neo Subsystem
+  public static S_Neo sneo = new S_Neo();
 
   Command m_autonomousCommand;
   SendableChooser<Command> autoChooser;
@@ -81,13 +84,13 @@ public class Robot extends TimedRobot {
 
     compressor.setClosedLoopControl(true);
 
-
+/*
     sdrive.gyro.reset();
 
   // encoder set-up
     sdrive.configDriveEncoders();
     sdrive.zeroDriveEncoders();
-
+*/
  
 
 

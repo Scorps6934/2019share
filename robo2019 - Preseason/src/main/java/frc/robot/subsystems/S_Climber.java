@@ -11,20 +11,36 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class S_Hatch extends Subsystem {
-	TalonSRX pump = new TalonSRX(RobotMap.hatchPumpTalon);
-  DoubleSolenoid solenoid = new DoubleSolenoid(RobotMap.pcmPort, RobotMap.hatchSolenoidForward, RobotMap.hatchSolenoidReverse);
+public class S_Climber extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-	public S_Hatch(){
-		pump.setNeutralMode(NeutralMode.Brake);
-	}
+  TalonSRX mpump;
+  TalonSRX rightClimberMotor; 
+  TalonSRX leftClimberMotor;
+    public S_Climber(){
+      mpump = new TalonSRX(RobotMap.pump);
+      rightClimberMotor = new TalonSRX(RobotMap.rightClimberTalonPort);
+      leftClimberMotor = new TalonSRX(RobotMap.leftClimberTalonPort);
+
+      mpump.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void setClimbRaw(double power){
+      rightClimberMotor.set(ControlMode.PercentOutput, power);
+      leftClimberMotor.set(ControlMode.PercentOutput, -power); // TODO: make sure both go in same direction physically
+    }
+    public void setPumpRaw(double power){
+      mpump.set(ControlMode.PercentOutput, power);
+    }
+
 
   @Override
   public void initDefaultCommand() {
@@ -32,21 +48,6 @@ public class S_Hatch extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-	public void setHatchPumpRaw(double power){
-		pump.set(ControlMode.PercentOutput, power);
-	}
 
-	public void useSuctionValve() {
-		solenoid.set(DoubleSolenoid.Value.kForward);
-	}
 
-	public void useFreeValve() {
-		solenoid.set(DoubleSolenoid.Value.kReverse);
-	}
-
-  // ????
-	public void stopHatch() {
-		solenoid.set(DoubleSolenoid.Value.kOff);
-	}
-	
 }
